@@ -12,9 +12,7 @@ const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
-const redisStorage = require('connect-redis')(session);
-const redis = require('redis');
-const client = redis.createClient();
+const MongoStore = require('connect-mongo')(session);
 
 const host = '127.0.0.1'
 const port = 3000
@@ -33,11 +31,12 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(flash())
 app.use(session({
-  store: new redisStorage({
-    host: host,
-    port: 3000,
-    client: client,
-    ttl: 3600000,
+  store            : new MongoStore({
+    host         : process.env.DB_HOST,
+    port         : process.env.DB_PORT,
+    db           : process.env.DB_NAME,
+    autoReconnect: true,
+    ssl          : false
   }),
   secret: 'keyboard cat',
   resave: false,
