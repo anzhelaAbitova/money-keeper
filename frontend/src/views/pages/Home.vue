@@ -1,5 +1,6 @@
 <template>
   <div class="app-page__main">
+
     <div class="app-page__banner">
       <div class="app-page__banner-col">
         <div class="app-page__banner-content">
@@ -11,7 +12,10 @@
              doesn't need to download, can be used on desktop and smartphones alike.
           </div>
           <div class="app-page__banner-button">
-            <button class="btn btn-primery" @click="$router.push('/cabinet/home')">Use now</button>
+            <button
+              class="btn btn-primary"
+              @click="setModalState(modalAuthOpenParams)"
+            >Use now</button>
           </div>
         </div>
       </div>
@@ -54,21 +58,24 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue';
 import BannerImage from '@/components/images-svg/BannerImage.vue';
-
 import FeaturesCard from '@/components/page/FeaturesCard.vue';
+import { namespace } from 'vuex-class';
 import { IFeaturesCard } from '@/types';
+import { IModalState } from '../../store/modules/modal/types';
+
+const Modal = namespace('modal');
 
 @Component({
   components: {
-    HelloWorld,
     BannerImage,
     FeaturesCard,
   },
 })
 
 export default class Home extends Vue {
+  @Modal.Action private setModalState!: (ev: boolean) => void;
+
   featuresData: IFeaturesCard[] = [
     {
       title: 'No download',
@@ -85,6 +92,12 @@ export default class Home extends Vue {
       text: 'This app are free to use, now and forever',
       image: 'FeaturesThree',
     },
-  ]
+  ];
+
+  private modalAuthOpenParams: IModalState = {
+    modalComponentName: 'AuthModal',
+    modalState: true,
+    modalParams: { active: 1 },
+  }
 }
 </script>

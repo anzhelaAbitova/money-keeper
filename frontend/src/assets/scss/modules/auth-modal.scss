@@ -1,0 +1,82 @@
+.auth-modal {
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+
+    &__close {
+        padding: 30px 30px 10px 10px;
+
+        button {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+    }
+
+    &__content {
+        width: 50%;
+        height: 450px;
+        align-items: stretch;
+        padding: 20px 10px;
+        background-color: $colorLight;
+    }
+
+    &__image {
+        position: relative;
+        width: 50%;
+        height: 100%;
+        text-align: right;
+
+        img {
+            height: 100%;
+            margin: 0 0 -4px;
+
+        }
+
+        &:after {
+            content: '';
+            @extend %posa;
+            z-index: 3;
+            background-color: rgba($colorBlack, .4);
+        }
+    }
+
+    &__tabs {
+        @extend %dfsa;
+        border-bottom: 2px solid $colorPurple2;
+    }
+
+    &__tab {
+        padding: 0 20px 10px;
+        font-size: 22px;
+        color: $colorPurple2;
+
+        &:not(.active) {
+            cursor: pointer;
+            opacity: .5;
+        }
+    }
+
+    &__body {
+        height: calc(100% - 36px);
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: space-around;
+        padding: 20px 0;
+        height: 100%;
+    }
+
+    &__form-row {
+        margin: 0 0 10px;
+    }
+
+    &__form-button {
+        text-align: center;
+        margin: auto 0;
+    }
+}
