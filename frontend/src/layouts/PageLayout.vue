@@ -10,7 +10,7 @@
         <div class="app-page__auth">
           <div class="app-page__auth-reg">
             <a href="javascript:void(0);" @click="$router.push('/cabinet/home')">
-              <user-image></user-image>
+              <UserImage />
             </a>
           </div>
         </div>

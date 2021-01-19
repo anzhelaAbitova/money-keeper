@@ -1,5 +1,13 @@
 <template>
   <div class="app-page__main">
+    <AppModal name="auth-modal" height="auto">
+      <div class="auth-modal__close" slot="top-right">
+        <button @click="$modal.hide('auth-modal')">
+          <IconClose width="30" height="30" />
+        </button>
+      </div>
+      <AuthModal />
+    </AppModal>
     <div class="app-page__banner">
       <div class="app-page__banner-col">
         <div class="app-page__banner-content">
@@ -11,7 +19,9 @@
              doesn't need to download, can be used on desktop and smartphones alike.
           </div>
           <div class="app-page__banner-button">
-            <button class="btn btn-primery" @click="$router.push('/cabinet/home')">Use now</button>
+            <button class="btn btn-primary" @click="$modal.show('auth-modal')">
+              Use now
+            </button>
           </div>
         </div>
       </div>
@@ -54,17 +64,18 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue';
 import BannerImage from '@/components/images-svg/BannerImage.vue';
-
 import FeaturesCard from '@/components/page/FeaturesCard.vue';
+import AuthModal from '@/components/modal/AuthModal.vue';
+import IconClose from '@/components/images-svg/icons/IconClose.vue';
 import { IFeaturesCard } from '@/types';
 
 @Component({
   components: {
-    HelloWorld,
     BannerImage,
     FeaturesCard,
+    AuthModal,
+    IconClose,
   },
 })
 
@@ -85,6 +96,6 @@ export default class Home extends Vue {
       text: 'This app are free to use, now and forever',
       image: 'FeaturesThree',
     },
-  ]
+  ];
 }
 </script>
