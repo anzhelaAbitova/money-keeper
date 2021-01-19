@@ -18,8 +18,8 @@
             </div>
           </template>
           <div class="auth-modal__form-button">
-            <button class="btn btn-primary" @click="$modal.show('auth-modal')">
-              Use now
+            <button class="btn btn-primary" @click="signIn">
+              Sign in
             </button>
           </div>
         </div>
@@ -32,6 +32,11 @@
           <div class="auth-modal__form-row">
             <AppInput :params="inputConfirmData" @changeInput="confirmPassword = $event" />
           </div>
+          <div class="auth-modal__form-button">
+            <button class="btn btn-primary" @click="register">
+              Register me
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -42,13 +47,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import { IAppInput } from '@/types';
 import AppInput from '@/components/elements/AppInput.vue';
-// import BannerImage from '@/components/images-svg/BannerImage.vue';
+import { namespace } from 'vuex-class';
 
-// import FeaturesCard from '@/components/page/FeaturesCard.vue';
-// import { IFeaturesCard } from '@/types';
+const Modal = namespace('modal');
+
+type AuthModalParams = {
+  active: number;
+}
 
 @Component({
   components: {
@@ -57,7 +65,11 @@ import AppInput from '@/components/elements/AppInput.vue';
 })
 
 export default class AuthModal extends Vue {
-  private activeTab = 1;
+  @Prop({ default: { active: 0 } }) params!: AuthModalParams
+
+  @Modal.Action private setModalState!: (ev: boolean) => void;
+
+  private activeTab = 0;
 
   private inputConfirmData: IAppInput = {
     label: 'Confirm password:',
@@ -95,5 +107,24 @@ export default class AuthModal extends Vue {
   password: string | null = null;
 
   confirmPassword: string | null = null;
+
+  mounted() {
+    this.activeTab = this.params.active;
+  }
+
+  private signIn() {
+    // need to validate
+    this.goToCabinet('/cabinet/home');
+  }
+
+  private register() {
+    // need to validate
+    this.goToCabinet('/cabinet/settings');
+  }
+
+  private goToCabinet(path: string) {
+    this.setModalState(false);
+    this.$router.push(path);
+  }
 }
 </script>

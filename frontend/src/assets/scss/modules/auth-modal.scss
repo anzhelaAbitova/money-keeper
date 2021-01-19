@@ -16,7 +16,8 @@
 
     &__content {
         width: 50%;
-        height: 100%;
+        height: 450px;
+        align-items: stretch;
         padding: 20px 10px;
         background-color: $colorLight;
     }
@@ -57,11 +58,25 @@
         }
     }
 
+    &__body {
+        height: calc(100% - 36px);
+    }
+
     &__form {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: space-around;
         padding: 20px 0;
+        height: 100%;
     }
 
     &__form-row {
         margin: 0 0 10px;
+    }
+
+    &__form-button {
+        text-align: center;
+        margin: auto 0;
     }
 }

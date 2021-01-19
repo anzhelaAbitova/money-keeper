@@ -9,7 +9,7 @@
         </nav>
         <div class="app-page__auth">
           <div class="app-page__auth-reg">
-            <a href="javascript:void(0);" @click="$router.push('/cabinet/home')">
+            <a href="javascript:void(0);" @click="setModalState(modalOpenParams)">
               <UserImage />
             </a>
           </div>
@@ -33,11 +33,23 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import UserImage from '@/components/images-svg/UserImage.vue';
+import { namespace } from 'vuex-class';
+import { IModalState } from '../store/modules/modal/types';
+
+const Modal = namespace('modal');
 
 @Component({
   components: {
     UserImage,
   },
 })
-export default class PageLayout extends Vue {}
+export default class PageLayout extends Vue {
+  @Modal.Action private setModalState!: (ev: boolean) => void;
+
+  private modalOpenParams: IModalState = {
+    modalComponentName: 'AuthModal',
+    modalState: true,
+    modalParams: { active: 0 },
+  }
+}
 </script>
