@@ -5,7 +5,11 @@
         <router-view/>
       </component>
     </transition>
-    <AppModal name="auth-modal" height="450px" @before-close="setModalState(false)">
+    <AppModal
+      name="auth-modal"
+      height="450px"
+      @before-close="setModalState()"
+    >
       <div class="auth-modal__close" slot="top-right">
         <button @click="$modal.hide('auth-modal')">
           <IconClose width="30" height="30" />

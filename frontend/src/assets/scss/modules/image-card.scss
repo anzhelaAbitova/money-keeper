@@ -1,0 +1,50 @@
+.image-card {
+    width: 342px;
+    padding: 20px 34px;
+    margin: 0 auto;
+    background-color: $colorWhite;
+    border-radius: 8px;
+
+    &__head {
+        padding: 0 0 10px;
+        text-align: right;
+    }
+
+    &__button {
+        cursor: pointer;
+
+        input {
+            width: 0;
+            height: 0;
+        }
+    }
+
+    &__body {
+
+    }
+
+    &__image {
+        position: relative;
+        height: 246px;
+        margin: 0 0 20px;
+        background: #C4C4C4;
+        border-radius: 8px;
+        overflow: hidden;
+
+        img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            display: block;
+            width: 100%;
+            min-width: 100%;
+            height: 100%;
+            transform: translate3d(-50%, -50%, 0);
+        }
+    }
+
+    &__image-default {
+        @extend %posa;
+        @extend %dfc;
+    }
+}

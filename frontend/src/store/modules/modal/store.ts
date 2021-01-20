@@ -6,9 +6,9 @@ import mutations from './store/mutations';
 import { IModalState } from './types';
 
 const state = {
-  modalComponentName: '',
+  modalComponentName: 'AuthModal',
   modalState: false,
-  modalParams: {},
+  modalParams: { active: 0 },
 };
 
 const modal: Module<IModalState, IRootState> = {
