@@ -3,6 +3,7 @@ import Vuex, { StoreOptions } from 'vuex';
 import { IRootState } from './types';
 import modal from './modules/modal/store';
 import global from './modules/global/store';
+import user from './modules/user/store';
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ const store: StoreOptions<IRootState> = {
   modules: {
     modal,
     global,
+    user,
   },
   strict: true,
 };
