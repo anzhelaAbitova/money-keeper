@@ -1,6 +1,9 @@
 <h1>Hello</h1>
 <p><%= name %></p>
-<p><%= usersEjs.name %></p>
+
 <form action="/logout?_method=DELETE" method="POST">
     <button type="submit">Log out</button>
 </form>
+<script>
+    axios.defaults.withCredentials = true;
+    </script>

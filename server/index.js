@@ -1,56 +1,78 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-
+//import { User, Income, Expense } from './models';
 const express = require('express')
 const app = express()
 const MongoClient = require('mongodb').MongoClient;
-let db;
-const bcrypt = require('bcrypt')
+//let db;
+let user;
+const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
-const passport = require('passport')
-const flash = require('express-flash')
-const session = require('express-session')
-const methodOverride = require('method-override')
+const session = require('express-session');
+const passport = require('passport');
+const flash = require('express-flash');
+const methodOverride = require('method-override');
+const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
+const Schema = mongoose.Schema;
+
+const User = require('./models').User;
+const Income = require('./models').Income;
 
 const host = '127.0.0.1'
-const port = 3000
+const port = process.env.PORT || 3000;
+
+const users = [];
 
 const initializePassport = require('./passport-config')
 initializePassport(
   passport,
-  email => users.find(user => user.email === email),
-  id => users.find(user => user.id === id)
+  async email => await User.findOne({ email: email }),
+  async id => await User.findOne({ id: id }),
 )
-
-const users = []
 
 app.set('view-engine', 'ejs')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(flash())
 app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
+  cookie : {
+    maxAge:(2629743),
+    secure: false,
+  },
   store            : new MongoStore({
+    mongooseConnection: mongoose.connection,
     host         : process.env.DB_HOST,
     port         : process.env.DB_PORT,
     db           : process.env.DB_NAME,
     autoReconnect: true,
     ssl          : false
   }),
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: false,
-  cookie : {
-    maxAge:(1000 * 60 * 100)
-  }  
 }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
 
+mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true, useUnifiedTopology: true});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+});
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Credentials",true);
+  next();
+});
+
 app.get('/', checkAuthenticated, (req, res) => {
   res.render('index.ejs', { name: req.user.name, usersEjs: null })
+  console.log(req.session.passport.user);
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
@@ -63,34 +85,68 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   failureFlash: true
 }))
 
-app.get('/register', checkNotAuthenticated, (req, res) => {
+
+app.get('/register', checkNotAuthenticated, async (req, res) => {
   res.render('register.ejs', { usersEjs: null })
 })
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
-    const user = ({
+    user = new User({
       name: req.body.name,
       email: req.body.email,
       password: hashedPassword
     })
+    await user.save();
     users.push(user);
-    dbUsers.collection('users').insert(user, function (err, result) {
-      if (err) {
-        console.log(err);
-        res.sendStatus(500);
-      }
-      return res.send(user);
+    req.login(user, function(err) {
+      if (err) { return next(err); }
+      return res.redirect('/');
     });
-    res.redirect('/');
   } catch {
     res.redirect('/register');
   }
 })
 
-app.get('/users', checkNotAuthenticated, (req, res) => {
-  dbUsers.collection('users').find().toArray(function (err, docs) {
+app.get('/users', checkAuthenticated, (req, res) => {
+  User.find(function (err, docs) {
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500);
+    }
+    res.send(docs);
+  })
+})
+
+app.get('/post', checkAuthenticated, (req, res) => {
+  console.log(req)
+  res.render('post.ejs');
+})
+
+app.post('/post', checkAuthenticated, async (req, res) => {
+  try {
+    const income = new Income ({
+      user: req.session.passport.user || 'test',
+      number: req.body.number,
+      name: req.body.name,
+      cost: req.body.cost,
+      regular: (req.body.regular === 'on') ? true : false,
+    })
+    await income.
+    save(function(err){
+  
+      if(err) return console.log(err);
+      console.log("Сохранен объект", income);
+  });
+    res.redirect('/posts');
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);  }
+})
+
+app.get('/posts', checkAuthenticated, (req, res) => {
+  Income.find(function (err, docs) {
     if (err) {
       console.log(err);
       return res.sendStatus(500);
@@ -108,7 +164,7 @@ function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next()
   }
-
+  console.log(req.isAuthenticated())
   res.redirect('/login')
 }
 
@@ -119,10 +175,6 @@ function checkNotAuthenticated(req, res, next) {
   next()
 }
 
-MongoClient.connect('mongodb://localhost:27017', function (err, database) {
-  if (err) {
-    return console.log(err);
-  }
-  dbUsers = database.db('users');
-  app.listen(3000);
-})
+mongoose.set('useCreateIndex', true);
+mongoose.connect('mongodb://localhost/test', { useNewUrlParser: true, useUnifiedTopology: true });
+app.listen(port);
