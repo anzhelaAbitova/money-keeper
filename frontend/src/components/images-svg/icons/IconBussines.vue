@@ -1,0 +1,3 @@
+<template>
+  <svg width="48" height="53" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M40 15.458h-8v-4.416l-4-4.417h-8l-4 4.417v4.416H8c-2.2 0-4 1.988-4 4.417v11.042c0 1.656.8 3.047 2 3.82v7.221c0 2.452 1.78 4.417 4 4.417h28c2.22 0 4-1.965 4-4.417v-7.243c1.18-.773 2-2.186 2-3.798V19.875c0-2.43-1.8-4.417-4-4.417zm-20-4.416h8v4.416h-8v-4.416zM8 19.875h32v11.042H30v-6.625H18v6.625H8V19.875zm18 13.25h-4v-4.417h4v4.417zm12 8.833H10v-6.625h8v2.209h12v-2.209h8v6.625z" fill="url(#paint0_linear)"/><defs><linearGradient id="paint0_linear" x1="44" y1="6.625" x2="4.251" y2="46.624" gradientUnits="userSpaceOnUse"><stop stop-color="#E6F3F5"/><stop offset="1" stop-color="#B2EBF3"/></linearGradient></defs></svg>
+</template>
