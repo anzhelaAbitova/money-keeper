@@ -16,7 +16,7 @@ const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const Schema = mongoose.Schema;
-
+const connect = require('./mongoConnection');
 const User = require('./models').User;
 const Income = require('./models').Income;
 
@@ -176,5 +176,8 @@ function checkNotAuthenticated(req, res, next) {
 }
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect('mongodb://localhost/test', { useNewUrlParser: true, useUnifiedTopology: true });
+
+//const uri = "mongodb+srv://user_34:b5rPniU429Qd8d3n@cluster0.xpo9w.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const uri = 'mongodb://localhost/test';
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 app.listen(port);
