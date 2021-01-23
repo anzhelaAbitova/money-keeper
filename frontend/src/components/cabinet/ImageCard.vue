@@ -56,7 +56,7 @@ export default class ImageCard extends Vue {
       .then((res) => {
         this.setUserAvatar(`https://beinweb.ru/api/images/${res[0].dir}/${file.name}`);
       })
-      .catch((error) => console.log('previewThumbnail error', error));
+      .catch((error) => console.log('upload error', error));
   }
 }
 </script>

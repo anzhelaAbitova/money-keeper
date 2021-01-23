@@ -8,7 +8,7 @@ import { IUser } from './types';
 const state = {
   avatar: 'https://beinweb.ru/api/images/user.png',
   name: 'Jane Doe',
-  status: 'Web-designer',
+  status: 'active',
   position: 'Web-designer',
   email: localStorage.getItem('app-rs-email') || '',
   token: localStorage.getItem('app-rs-token') || '',
