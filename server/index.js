@@ -1,11 +1,11 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-//import { User, Income, Expense } from './models';
+
 const express = require('express')
 const app = express()
 const MongoClient = require('mongodb').MongoClient;
-//let db;
+
 let user;
 const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
@@ -15,10 +15,10 @@ const flash = require('express-flash');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
-const Schema = mongoose.Schema;
 const connect = require('./mongoConnection');
 const User = require('./models').User;
-const Income = require('./models').Income;
+const Interaction = require('./models').Interaction;
+const interactionCrud = require('./interactionCrud');
 
 const host = '127.0.0.1'
 const port = process.env.PORT || 3000;
@@ -57,13 +57,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
 
-mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true, useUnifiedTopology: true});
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  // we're connected!
-});
-
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Credentials",true);
@@ -72,7 +65,6 @@ app.use(function(req, res, next) {
 
 app.get('/', checkAuthenticated, (req, res) => {
   res.render('index.ejs', { name: req.user.name, usersEjs: null })
-  console.log(req.session.passport.user);
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
@@ -126,18 +118,18 @@ app.get('/post', checkAuthenticated, (req, res) => {
 
 app.post('/post', checkAuthenticated, async (req, res) => {
   try {
-    const income = new Income ({
+    const interaction = new Interaction ({
       user: req.session.passport.user || 'test',
       number: req.body.number,
       name: req.body.name,
       cost: req.body.cost,
       regular: (req.body.regular === 'on') ? true : false,
     })
-    await income.
+    await interaction.
     save(function(err){
   
       if(err) return console.log(err);
-      console.log("Сохранен объект", income);
+      console.log("Сохранен объект", interaction);
   });
     res.redirect('/posts');
   } catch (err) {
@@ -146,7 +138,7 @@ app.post('/post', checkAuthenticated, async (req, res) => {
 })
 
 app.get('/posts', checkAuthenticated, (req, res) => {
-  Income.find(function (err, docs) {
+  Interaction.find(function (err, docs) {
     if (err) {
       console.log(err);
       return res.sendStatus(500);
@@ -179,5 +171,10 @@ mongoose.set('useCreateIndex', true);
 
 //const uri = "mongodb+srv://user_34:b5rPniU429Qd8d3n@cluster0.xpo9w.mongodb.net/<dbname>?retryWrites=true&w=majority";
 const uri = 'mongodb://localhost/test';
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+});
 app.listen(port);
