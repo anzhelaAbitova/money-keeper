@@ -1,8 +1,8 @@
 const express = require('express');
 const Interaction = require('./models').Interaction;
-const crudRouter = express.Router();
+const interactionCrud = express.Router();
 
-crudRouter.get('/', function(req, res){
+interactionCrud.get('/', function(req, res){
     console.log('getting all interaction');
     Interaction.find({}).exec(function(err, interaction){
         try {
@@ -14,7 +14,7 @@ crudRouter.get('/', function(req, res){
     });
 });
 
-crudRouter.get('/:id', function(req, res){
+interactionCrud.get('/:id', function(req, res){
     console.log('getting one interaction');
     Interaction.findOne({
         _id: req.params.id
@@ -28,7 +28,7 @@ crudRouter.get('/:id', function(req, res){
     });
 });
 
-crudRouter.post('/', function(req, res){
+interactionCrud.post('/', function(req, res){
     const interaction = new Interaction();
     interaction.name = req.body.name;
     interaction.cost = req.body.cost;
@@ -43,14 +43,14 @@ crudRouter.post('/', function(req, res){
     });
 });
 
-crudRouter.put('/:id', function(req, res){
+interactionCrud.put('/:id', function(req, res){
     Interaction.findOneAndUpdate({
         _id: req.params.id
     },{
         $set: {
-            name: req.body.name,
+            work: req.body.work,
             cost: req.body.cost,
-            regular: req.body.regular
+            regular: (req.body.regular === 'on') ? true : false,
         }
     },{
         new: true,
@@ -65,7 +65,7 @@ crudRouter.put('/:id', function(req, res){
     });
 });
 
-crudRouter.delete('/:id', function(req, res){
+interactionCrud.delete('/:id', function(req, res){
     interaction.findByIdAndRemove({
         _id: req.params.id
     },function(err, interaction){
@@ -78,4 +78,4 @@ crudRouter.delete('/:id', function(req, res){
     });
 });
 
-module.exports = crudRouter;
+module.exports = interactionCrud;

@@ -18,6 +18,7 @@ const MongoStore = require('connect-mongo')(session);
 const connect = require('./mongoConnection');
 const User = require('./models').User;
 const Interaction = require('./models').Interaction;
+const Contractor = require('./models').Contractor;
 const interactionCrud = require('./interactionCrud');
 
 const host = '127.0.0.1'
@@ -86,7 +87,7 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
     user = new User({
-      name: req.body.name,
+      username: req.body.username,
       email: req.body.email,
       password: hashedPassword
     })
@@ -121,8 +122,32 @@ app.post('/post', checkAuthenticated, async (req, res) => {
     const interaction = new Interaction ({
       user: req.session.passport.user || 'test',
       number: req.body.number,
-      name: req.body.name,
+      work: req.body.work,
+      contractor: req.body.contractor,
       cost: req.body.cost,
+      regular: (req.body.regular === 'on') ? true : false,
+    })
+    await interaction.
+    save(function(err){
+  
+      if(err) return console.log(err);
+      console.log("Сохранен объект", interaction);
+  });
+    res.redirect('/posts');
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);  }
+})
+
+app.get('./contractor', checkAuthenticated, (req, res) => {
+  res.render('contractor.ejs');
+})
+
+app.post('/post', checkAuthenticated, async (req, res) => {
+  try {
+    const contractor = new Interaction ({
+      name: req.body.name,
+      works: req.session.passport.work || 'test',
       regular: (req.body.regular === 'on') ? true : false,
     })
     await interaction.
