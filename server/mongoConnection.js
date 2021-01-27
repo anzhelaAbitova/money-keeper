@@ -1,7 +1,10 @@
+const mongoose = require('mongoose');
+let connectionTimeout;
+
 const throwTimeoutError = () => {
     connectionTimeout = setTimeout(() => {
         throw new DatabaseError();
-    }, 16000); // (reconnectTries * reconnectInterval) + buffer
+    }, 16000); 
 }
 const instanceEventListeners = ({ conn }) => {
     conn.on('connected', () => {
@@ -21,14 +24,12 @@ const instanceEventListeners = ({ conn }) => {
 		clearTimeout(connectionTimeout);
     });
 }
-module.exports.init = () => {
-    const mongoInstance = mongoose.createConnection(config.DATABASE.HOST, {
+module.exports.init = (mongooseC, url) => {
+    const mongoInstance = mongooseC.createConnection(url, {
         useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
         keepAlive: true,
-        autoReconnect: true,
-        reconnectTries: 3,
-        reconnectInterval: 5000,
     });
-    clients.mongoInstance = mongoInstance;
     instanceEventListeners({ conn: mongoInstance });
 };

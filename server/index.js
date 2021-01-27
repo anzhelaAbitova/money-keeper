@@ -19,8 +19,8 @@ const connect = require('./mongoConnection');
 const User = require('./models').User;
 const Interaction = require('./models').Interaction;
 const Contractor = require('./models').Contractor;
-const interactionCrud = require('./interactionCrud');
-
+const interactionCrud = require('./crudRoutes/interactionCrud');
+const router = require('./routes/routes')
 const host = '127.0.0.1'
 const port = process.env.PORT || 3000;
 
@@ -66,6 +66,7 @@ app.use(function(req, res, next) {
 
 app.get('/', checkAuthenticated, (req, res) => {
   res.render('index.ejs', { name: req.user.name, usersEjs: null })
+  //res.send('tes express nodejs mongodb');
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
@@ -127,8 +128,7 @@ app.post('/post', checkAuthenticated, async (req, res) => {
       cost: req.body.cost,
       regular: (req.body.regular === 'on') ? true : false,
     })
-    await interaction.
-    save(function(err){
+    await interaction.save(function(err){
   
       if(err) return console.log(err);
       console.log("Сохранен объект", interaction);
@@ -143,18 +143,17 @@ app.get('./contractor', checkAuthenticated, (req, res) => {
   res.render('contractor.ejs');
 })
 
-app.post('/post', checkAuthenticated, async (req, res) => {
+app.post('/contractor', checkAuthenticated, async (req, res) => {
   try {
-    const contractor = new Interaction ({
+    const contractor = new Contractor ({
       name: req.body.name,
-      works: req.session.passport.work || 'test',
+      works: req.body.work || 'test',
       regular: (req.body.regular === 'on') ? true : false,
     })
-    await interaction.
-    save(function(err){
+    await contractor.save(function(err){
   
       if(err) return console.log(err);
-      console.log("Сохранен объект", interaction);
+      console.log("Сохранен объект", contractor);
   });
     res.redirect('/posts');
   } catch (err) {
