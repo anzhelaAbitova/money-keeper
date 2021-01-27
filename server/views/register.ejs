@@ -1,0 +1,22 @@
+<h1>Register</h1>
+<% if (usersEjs) { %>
+    <p><%= usersEjs %></p>
+<% } %>
+<% if (!usersEjs) { %>
+<form action="/register" method="POST">
+    <div>
+        <label for="username">Name</label>
+        <input type="text" name="username" id="username" required>
+    </div>
+    <div>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required>
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+    </div>
+    <button type="submit">Register</button>
+</form>
+<% } %>
+<a href="/login">Login</a>
