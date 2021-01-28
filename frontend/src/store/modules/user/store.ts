@@ -6,7 +6,7 @@ import mutations from './store/mutations';
 import { IUser } from './types';
 
 const state = {
-  avatar: 'https://beinweb.ru/api/images/user.png',
+  avatar: '',
   name: 'Jane Doe',
   status: 'active',
   position: 'Web-designer',

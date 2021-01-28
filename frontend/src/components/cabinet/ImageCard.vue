@@ -8,10 +8,10 @@
     </div>
     <div class="image-card__body">
       <div class="image-card__image">
-        <div class="image-card__image-default">
+        <div v-if="!getUserAvatar" class="image-card__image-default">
           <IconUser />
         </div>
-        <img v-if="getUserAvatar" :src="getUserAvatar" alt="User avatar">
+        <img v-else :src="getUserAvatar" alt="User avatar">
       </div>
       <div class="image-card__name">{{ getUserName }}</div>
       <div class="image-card__description">Web-designer</div>
