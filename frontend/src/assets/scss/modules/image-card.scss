@@ -6,8 +6,9 @@
     border-radius: 8px;
 
     &__head {
+        display: flex;
+        justify-content: flex-end;
         padding: 0 0 10px;
-        text-align: right;
     }
 
     &__button {
@@ -16,6 +17,10 @@
         input {
             width: 0;
             height: 0;
+        }
+
+        &:not(:last-child) {
+            margin: 0 15px 0 0;
         }
     }
 
