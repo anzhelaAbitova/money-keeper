@@ -206,8 +206,8 @@ function checkNotAuthenticated(req, res, next) {
 
 mongoose.set('useCreateIndex', true);
 
-//const uri = "mongodb+srv://user_34:b5rPniU429Qd8d3n@cluster0.xpo9w.mongodb.net/<dbname>?retryWrites=true&w=majority";
-const uri = 'mongodb://localhost/test';
+const uri = "mongodb+srv://user_34:b5rPniU429Qd8d3n@cluster0.xpo9w.mongodb.net/<dbname>?retryWrites=true&w=majority";
+//const uri = 'mongodb://localhost/test';
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
