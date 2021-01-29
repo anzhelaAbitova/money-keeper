@@ -113,9 +113,24 @@ export default class AuthModal extends Vue {
     this.activeTab = this.params.active;
   }
 
-  private signIn() {
+  private async signIn() {
     // need to validate
-    this.goToCabinet('/cabinet/home');
+    console.log(this);
+    const url = 'https://localhost:3000/posts';
+    const instance = axios.create({
+      baseURL: 'http://localhost:3000/register',
+    });
+    const options = {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+      },
+    };
+    const data = await axios.get(url, options)
+      .then((response) => console.log(response))
+      .catch((err) => console.log(err));
+    // this.goToCabinet('/cabinet/home');
   }
 
   private async register() {
