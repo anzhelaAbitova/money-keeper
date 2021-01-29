@@ -14,7 +14,7 @@
         <div v-if="activeTab == 0" class="auth-modal__form">
           <template v-for="(item, i) in inputsLoginData">
             <div class="auth-modal__form-row" :key="'reginpts' + i" >
-              <AppInput :params="item" @changeInput="[item.name] = $event" />
+              <AppInput :params="item" @changeInput="[item.name] = $event"/>
             </div>
           </template>
           <div class="auth-modal__form-button">
@@ -51,6 +51,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import { IAppInput } from '@/types';
 import AppInput from '@/components/elements/AppInput.vue';
 import { namespace } from 'vuex-class';
+import axios from 'axios';
 
 const Modal = namespace('modal');
 
@@ -117,9 +118,24 @@ export default class AuthModal extends Vue {
     this.goToCabinet('/cabinet/home');
   }
 
-  private register() {
+  private async register() {
     // need to validate
-    this.goToCabinet('/cabinet/settings');
+    const url = 'https://localhost:3000/register';
+    const instance = axios.create({
+      baseURL: 'http://localhost:3000/register',
+    });
+    const options = {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+      },
+    };
+    const data = await axios.post(url, { username: 'TestName', email: 'b@a', password: 'bo' }, options)
+      .then((response) => console.log(response))
+      .catch((err) => console.log(err));
+    console.log(this);
+    // this.goToCabinet('/cabinet/settings');
   }
 
   private goToCabinet(path: string) {

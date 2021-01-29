@@ -1,5 +1,6 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 }
 
 const express = require('express')
@@ -8,6 +9,7 @@ const MongoClient = require('mongodb').MongoClient;
 
 let user;
 const bcrypt = require('bcrypt');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
@@ -37,6 +39,7 @@ app.set('view-engine', 'ejs')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(flash())
+app.use(cors())
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
@@ -57,10 +60,18 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
-
+/*
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Credentials",true);
+
+  next();
+});
+*/
+app.use(async (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
 });
 
@@ -84,7 +95,7 @@ app.get('/register', checkNotAuthenticated, async (req, res) => {
   res.render('register.ejs', { usersEjs: null })
 })
 
-app.post('/register', checkNotAuthenticated, async (req, res) => {
+app.post('/register', checkNotAuthenticated, async (req, res, next) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
     user = new User({
@@ -98,6 +109,8 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
       if (err) { return next(err); }
       return res.redirect('/');
     });
+    console.log(user);
+    next();
   } catch {
     res.redirect('/register');
   }
