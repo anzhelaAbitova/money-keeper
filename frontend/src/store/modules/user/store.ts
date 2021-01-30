@@ -3,15 +3,18 @@ import { IRootState } from '@/store/types';
 import actions from './store/actions';
 import getters from './store/getters';
 import mutations from './store/mutations';
-import { IModalState } from './types';
+import { IUser } from './types';
 
 const state = {
-  modalComponentName: 'AuthModal',
-  modalState: false,
-  modalParams: { active: 0 },
+  avatar: '',
+  name: 'Jane Doe',
+  status: 'active',
+  position: 'Web-designer',
+  email: localStorage.getItem('app-rs-email') || '',
+  token: localStorage.getItem('app-rs-token') || '',
 };
 
-const modal: Module<IModalState, IRootState> = {
+const user: Module<IUser, IRootState> = {
   namespaced: true,
   state,
   actions,
@@ -19,4 +22,4 @@ const modal: Module<IModalState, IRootState> = {
   mutations,
 };
 
-export default modal;
+export default user;

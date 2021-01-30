@@ -1,6 +1,6 @@
 @import "common/variables";
 @import "common/mixins";
-@import "common/fonts";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Raleway&display=swap');
 @import "common/transitions";
 @import "normalize-scss";
 @import "common/layout";
@@ -10,4 +10,7 @@
 @import "modules/app-page";
 @import "modules/auth-modal";
 @import "modules/app-cabinet";
+@import "modules/app-content";
 @import "modules/app-drawer";
+@import "modules/head-tabs";
+@import "modules/image-card";

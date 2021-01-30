@@ -5,8 +5,6 @@ import { SET_MODAL_STATE } from './mutations-types';
 
 const actions: ActionTree<IModalState, IRootState> = {
   setModalState({ commit }, payload: IModalState) {
-    console.log('action', payload);
-
     commit(SET_MODAL_STATE, payload);
   },
 };

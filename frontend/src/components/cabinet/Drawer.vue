@@ -7,7 +7,10 @@
   >
     <div class="app-drawer__inner">
       <div class="app-drawer__head">
-        <div class="app-drawer__icon">
+        <div
+          class="app-drawer__icon"
+          @click="changeRoute('/cabinet/home', 'This is start cabinet page')"
+        >
           <IconBussines />
         </div>
         <div class="app-drawer__name">
@@ -15,55 +18,20 @@
         </div>
       </div>
       <div class="app-drawer__nav">
-        <div class="app-drawer__rout" @click="changeRoute('/cabinet/home')">
+        <div
+          v-for="(item, i) in getDrawerRoutes"
+          class="app-drawer__rout"
+          :class="[
+            ( item.routName === 'Settings' ? 'app-drawer__footer' : null),
+            ($route.path === item.rout ? 'active' : null)
+          ]"
+          @click="changeRoute(item.rout, item.headerTitle)"
+          :key="'drwerrout' + i"
+        >
           <div class="app-drawer__rout-icon">
-            <IconCharts />
+            <component :is="item.icon" />
           </div>
-          <div class="app-drawer__rout-name">
-            Charts
-          </div>
-        </div>
-        <div class="app-drawer__rout" @click="changeRoute('/cabinet/history')">
-          <div class="app-drawer__rout-icon">
-            <IconAlarm />
-          </div>
-          <div class="app-drawer__rout-name">
-            History
-          </div>
-        </div>
-        <div class="app-drawer__rout" @click="changeRoute('/cabinet/goals')">
-          <div class="app-drawer__rout-icon">
-            <IconTrophy />
-          </div>
-          <div class="app-drawer__rout-name">
-            Goals
-          </div>
-        </div>
-        <div class="app-drawer__rout" @click="changeRoute('/cabinet/balance')">
-          <div class="app-drawer__rout-icon">
-            <IconWallet />
-          </div>
-          <div class="app-drawer__rout-name">
-            Balance
-          </div>
-        </div>
-        <div class="app-drawer__rout" @click="changeRoute('/cabinet/new')">
-          <div class="app-drawer__rout-icon">
-            <IconCamera />
-          </div>
-          <div class="app-drawer__rout-name">
-            Add new
-          </div>
-        </div>
-      </div>
-      <div class="app-drawer__footer">
-        <div class="app-drawer__rout" @click="changeRoute('/cabinet/settings')">
-          <div class="app-drawer__rout-icon">
-            <IconSettings />
-          </div>
-          <div class="app-drawer__rout-name">
-            Settings
-          </div>
+          <div class="app-drawer__rout-name">{{ item.routName }}</div>
         </div>
       </div>
     </div>
@@ -79,6 +47,10 @@ import IconCamera from '@/components/images-svg/icons/IconCamera.vue';
 import IconTrophy from '@/components/images-svg/icons/IconTrophy.vue';
 import IconWallet from '@/components/images-svg/icons/IconWallet.vue';
 import IconSettings from '@/components/images-svg/icons/IconSettings.vue';
+import { namespace } from 'vuex-class';
+import { IDrawerRoutes } from '../../store/modules/global/types';
+
+const Global = namespace('global');
 
 @Component({
   components: {
@@ -93,9 +65,12 @@ import IconSettings from '@/components/images-svg/icons/IconSettings.vue';
 })
 
 export default class Drawer extends Vue {
+  @Global.Getter private getDrawerRoutes!: IDrawerRoutes;
+
   private isOpen = false;
 
-  private changeRoute(rout: string) {
+  private changeRoute(rout: string, headerTitle: string) {
+    this.$emit('changeHeaderTitle', headerTitle);
     this.$router.push(rout);
     this.isOpen = false;
   }

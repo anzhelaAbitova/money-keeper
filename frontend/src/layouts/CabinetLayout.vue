@@ -1,11 +1,11 @@
 <template>
   <div class="app-cabinet">
     <div class="app-cabinet__aside">
-      <Drawer />
+      <Drawer @changeHeaderTitle="headerTitle = $event" />
     </div>
     <div class="app-cabinet__header">
       <div class="app-cabinet__header-greeting">Hello, Jane Doe</div>
-      <div class="app-cabinet__header-description">This is your expenses and incomes</div>
+      <div class="app-cabinet__header-description">{{ headerTitle }}</div>
       <div class="app-cabinet__header-style">
         <div class="app-cabinet__header-style_icon">
           <a href="javascript:void(0);">
@@ -47,5 +47,7 @@ import Drawer from '@/components/cabinet/Drawer.vue';
 
 export default class CabinetLayout extends Vue {
   private userDropDownOpen = false;
+
+  private headerTitle = 'This is start cabinet page';
 }
 </script>

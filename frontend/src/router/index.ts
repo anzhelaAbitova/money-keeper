@@ -2,11 +2,12 @@ import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import Home from '../views/pages/Home.vue';
 import CabinetHome from '../views/cabinet/Home.vue';
-import Settings from '../views/cabinet/Settings.vue';
+import Charts from '../views/cabinet/Charts.vue';
 import History from '../views/cabinet/History.vue';
 import Goals from '../views/cabinet/Goals.vue';
 import Balance from '../views/cabinet/Balance.vue';
 import New from '../views/cabinet/New.vue';
+import Settings from '../views/cabinet/Settings.vue';
 
 Vue.use(VueRouter);
 
@@ -28,6 +29,15 @@ const routes: Array<RouteConfig> = [
     path: '/cabinet/home',
     name: 'CabinetHome',
     component: CabinetHome,
+    meta: {
+      layout: 'cabinet-layout',
+      // requiresAuth: true
+    },
+  },
+  {
+    path: '/cabinet/charts',
+    name: 'Charts',
+    component: Charts,
     meta: {
       layout: 'cabinet-layout',
       // requiresAuth: true
