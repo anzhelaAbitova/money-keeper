@@ -24,6 +24,7 @@ const interactionCrud = require('./crudRoutes/interactionCrud');
 const router = require('./routes/routes')
 const host = '127.0.0.1'
 const port = process.env.PORT || 3000;
+const path = require('path');
 
 const users = [];
 
