@@ -14,7 +14,7 @@
         <div v-if="activeTab == 0" class="auth-modal__form">
           <template v-for="(item, i) in inputsLoginData">
             <div class="auth-modal__form-row" :key="'reginpts' + i" >
-              <AppInput :params="item" @changeInput="[item.name] = $event"/>
+              <AppInput :params="item" @changeInput="[item.name] = $event" />
             </div>
           </template>
           <div class="auth-modal__form-button">

@@ -56,6 +56,12 @@ app.use(session({
     autoReconnect: true,
     ssl          : false
   }),
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
+  cookie : {
+    maxAge:(1000 * 60 * 100)
+  }  
 }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -89,7 +95,6 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   failureRedirect: '/login',
   failureFlash: true
 }))
-
 
 app.get('/register', checkNotAuthenticated, async (req, res) => {
   res.render('register.ejs', { usersEjs: null })
