@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "start": "node app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [
     "js"
@@ -34,6 +34,6 @@
   },
   "engines": {
     "node": "10.x",
-    "npm":"6.14.x"
+    "npm": "6.14.x"
   }
 }
