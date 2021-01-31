@@ -70,27 +70,28 @@ app.use(async (req, res, next) => {
 });
 
 app.use(express.static(path.join(__dirname, "./dist")))
+/*
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, './dist', 'index.html'))
 })
-
+*/
 app.get('/', checkAuthenticated, (req, res) => {
   // res.render('index.ejs', { name: req.user.name, usersEjs: null })
 })
-
+/*
 app.get('/login', checkNotAuthenticated, (req, res) => {
-  // res.render('login.ejs')
+   res.render('login.ejs')
 })
 
+app.get('/register', checkNotAuthenticated, async (req, res) => {
+  res.render('register.ejs', { usersEjs: null })
+})
+*/
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true
 }))
-
-app.get('/register', checkNotAuthenticated, async (req, res) => {
-  res.render('register.ejs', { usersEjs: null })
-})
 
 app.post('/register', checkNotAuthenticated, async (req, res, next) => {
   try {
@@ -113,13 +114,14 @@ app.post('/register', checkNotAuthenticated, async (req, res, next) => {
   }
 })
 
-app.get('/users', checkAuthenticated, (req, res) => {
-  User.find(function (err, docs) {
+app.get('/user', checkAuthenticated, (req, res) => {
+  console.log(req.session.passport.user)
+  User.findOne({ "_id": req.session.passport.user }, (err, docs) => {
     if (err) {
       console.log(err);
       return res.sendStatus(500);
     }
-    res.send(docs);
+    return res.send(docs);
   })
 })
 
@@ -132,25 +134,27 @@ app.post('/post', checkAuthenticated, async (req, res) => {
   try {
     const interaction = new Interaction ({
       user: req.session.passport.user || 'test',
-      number: req.body.number,
+      number: req.body.number || 1,
       work: req.body.work,
       contractor: req.body.contractor,
       cost: req.body.cost,
       regular: (req.body.regular === 'on') ? true : false,
-    })
+    });
     await interaction.save(function(err){
   
       if(err) return console.log(err);
-      console.log("Сохранен объект", interaction);
+      return console.log("Сохранен объект", interaction);
   });
-    res.redirect('/posts');
+    //res.redirect('/posts');
+    //res.end();
   } catch (err) {
     console.log(err);
-    return res.sendStatus(500);  }
+    return res.sendStatus(500);  
+  }
 })
 
 app.get('./contractor', checkAuthenticated, (req, res) => {
-  res.render('contractor.ejs');
+  //res.render('contractor.ejs');
 })
 
 app.post('/contractor', checkAuthenticated, async (req, res) => {
@@ -171,17 +175,19 @@ app.post('/contractor', checkAuthenticated, async (req, res) => {
     return res.sendStatus(500);  }
 })
 
-app.get('/posts', (req, res) => {
-  Interaction.find(function (err, docs) {
-    if (err) {
-      console.log(err);
-      return res.sendStatus(500);
-    }
-    res.send(docs);
-  })
+app.get('/posts', checkAuthenticated, async (req, res) => {
+  try {
+    console.log(req.session.passport.user)
+    const data = await Interaction.find({ "user": req.session.passport.user }).populate().exec();
+    console.log(data)
+    return res.send(data);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
 })
 
-app.delete('/logout', (req, res) => {
+app.get('/logout', (req, res) => {
   req.logOut()
   res.redirect('/login')
 })

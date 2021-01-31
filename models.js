@@ -25,9 +25,8 @@ const userScheme = new Schema({
   
 const interactionScheme = new Schema({
     user: {
-       type: mongoose.Schema.Types.ObjectId,
-       ref: 'User',
-       required: true,
+      type: String,
+      required: true,
     },
     number: {
       type: Number,
@@ -39,8 +38,7 @@ const interactionScheme = new Schema({
       required: true,
     },
     contractor: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Contractor',
+      type: String,
       required: true,
    },
     cost: {
