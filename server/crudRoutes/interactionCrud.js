@@ -1,5 +1,5 @@
 const express = require('express');
-const Interaction = require('./../models').Interaction;
+const Interaction = require('../models/models').Interaction;
 const interactionCrud = express.Router();
 
 interactionCrud.get('/', function(req, res){

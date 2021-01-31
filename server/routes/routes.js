@@ -3,9 +3,9 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const mongoose = require('mongoose');
-const User = require('./../models').User;
-const Interaction = require('./../models').Interaction;
-const Contractor = require('./../models').Contractor;
+const User = require('../models/models').User;
+const Interaction = require('../models/models').Interaction;
+const Contractor = require('../models/models').Contractor;
 const interactionCrud = require('./../crudRoutes/interactionCrud');
   
 const host = '127.0.0.1'

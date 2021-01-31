@@ -103,6 +103,8 @@ export default class AuthModal extends Vue {
     },
   ]
 
+  baseUrl = 'https://money-keeper21.herokuapp.com/';
+
   email = '';
 
   password: string | null = null;
@@ -116,10 +118,10 @@ export default class AuthModal extends Vue {
   private async signIn() {
     // need to validate
     console.log(this);
-    const url = 'https://localhost:3000/posts';
-    const instance = axios.create({
-      baseURL: 'http://localhost:3000/register',
-    });
+    const url = 'https://money-keeper21.herokuapp.com/posts';
+    // const instance = axios.create({
+    //   baseURL: 'https://money-keeper21.herokuapp.com/register',
+    // });
     const options = {
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -127,7 +129,7 @@ export default class AuthModal extends Vue {
         'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
       },
     };
-    const data = await axios.get(url, options)
+    await axios.get(url, options)
       .then((response) => console.log(response))
       .catch((err) => console.log(err));
     // this.goToCabinet('/cabinet/home');
@@ -135,10 +137,10 @@ export default class AuthModal extends Vue {
 
   private async register() {
     // need to validate
-    const url = 'https://localhost:3000/register';
-    const instance = axios.create({
-      baseURL: 'http://localhost:3000/register',
-    });
+    const url = `${this.baseUrl}register`;
+    // const instance = axios.create({
+    //   baseURL: 'https://money-keeper21.herokuapp.com/register',
+    // });
     const options = {
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -146,10 +148,14 @@ export default class AuthModal extends Vue {
         'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
       },
     };
-    const data = await axios.post(url, { username: 'TestName', email: 'b@a', password: 'bo' }, options)
-      .then((response) => console.log(response))
+    const data = await axios.post(
+      url,
+      JSON.stringify({ username: 'TestName2', email: 'b2@a', password: 'bo2' }),
+      options,
+    )
+      .then((response) => console.log('response', response))
       .catch((err) => console.log(err));
-    console.log(this);
+    console.log('data', data);
     // this.goToCabinet('/cabinet/settings');
   }
 
