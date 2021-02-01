@@ -9,7 +9,7 @@ class Api {
             password: 'bo'
           };
           
-          let response = await fetch('http://localhost:3000/login', {
+          let response = await fetch('https://money-keeper21.herokuapp.com/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=utf-8'
@@ -27,7 +27,7 @@ class Api {
             password: 'query'
         };
         
-        let response = await fetch('http://localhost:3000/register', {
+        let response = await fetch('https://money-keeper21.herokuapp.com/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -39,7 +39,7 @@ class Api {
     }
     user = async () => {
         try {
-            let response = await fetch('http://localhost:3000/user');
+            let response = await fetch('https://money-keeper21.herokuapp.com/user');
             let data = await response.json();
             return data;
         } catch (err) {
@@ -56,7 +56,7 @@ class Api {
             regular: 'on'
         };
         
-        let response = await fetch('http://localhost:3000/post', {
+        let response = await fetch('https://money-keeper21.herokuapp.com/post', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -68,7 +68,7 @@ class Api {
     }
     posts = async () => {
         try {
-            let response = await fetch('http://localhost:3000/posts');
+            let response = await fetch('https://money-keeper21.herokuapp.com/posts');
             let data = await response.json();
             return data;
         } catch (err) {
