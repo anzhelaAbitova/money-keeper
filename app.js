@@ -72,7 +72,7 @@ app.use(express.static(path.join(__dirname, "./dist")))
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, './dist', 'index.html'))
 })
-*/
+
 app.get('/', checkAuthenticated, (req, res) => {
   // res.render('index.ejs', { name: req.user.name, usersEjs: null })
 })
@@ -84,14 +84,14 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
 app.get('/register', checkNotAuthenticated, async (req, res) => {
   res.render('register.ejs', { usersEjs: null })
 })
-
+*/
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true
 }))
 
-app.post('/register', checkNotAuthenticated, async (req, res, next) => {
+app.post('/register', checkNotAuthenticated, async (req, res) => {
   console.log(req.body)
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
@@ -162,11 +162,11 @@ app.post('/post', checkAuthenticated, async (req, res) => {
     return res.sendStatus(500);  
   }
 })
-
+/*
 app.get('./contractor', checkAuthenticated, (req, res) => {
   //res.render('contractor.ejs');
 })
-
+*/
 app.post('/contractor', checkAuthenticated, async (req, res) => {
   try {
     const contractor = new Contractor ({
