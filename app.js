@@ -86,8 +86,8 @@ app.get('/register', checkNotAuthenticated, async (req, res) => {
 })
 */
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
+  //successRedirect: '/',
+  //failureRedirect: '/login',
   failureFlash: true
 }))
 
@@ -106,7 +106,7 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
     });
     req.login(user, function(err) {
       if (err) { return next(err); }
-      return res.redirect('/');
+      return console.log('you in');
     });
   } catch {
     res.redirect('/register');
