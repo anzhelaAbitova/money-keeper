@@ -78,7 +78,7 @@ app.get('/*', (req, res) => {
 app.get('/', checkAuthenticated, (req, res) => {
   // res.render('index.ejs', { name: req.user.name, usersEjs: null })
 })
-/*
+
 app.get('/login', checkNotAuthenticated, (req, res) => {
    res.render('login.ejs')
 })
@@ -86,14 +86,16 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
 app.get('/register', checkNotAuthenticated, async (req, res) => {
   res.render('register.ejs', { usersEjs: null })
 })
-*/
+
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true
-}))
+})
+)
 
 app.post('/register', checkNotAuthenticated, async (req, res, next) => {
+  console.log(req.body)
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
     user = new User({
@@ -138,6 +140,7 @@ app.post('/post', checkAuthenticated, async (req, res) => {
       work: req.body.work,
       contractor: req.body.contractor,
       cost: req.body.cost,
+      income: (req.body.income === 'on') ? true : false,
       regular: (req.body.regular === 'on') ? true : false,
     });
     await interaction.save(function(err){
@@ -203,15 +206,15 @@ function checkAuthenticated(req, res, next) {
 
 function checkNotAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-    return res.redirect('/')
+    // return res.redirect('/')
   }
   next()
 }
 
 mongoose.set('useCreateIndex', true);
 
-const uri = "mongodb+srv://user_34:b5rPniU429Qd8d3n@cluster0.xpo9w.mongodb.net/<dbname>?retryWrites=true&w=majority";
-//const uri = 'mongodb://localhost/test';
+//const uri = "mongodb+srv://user_34:b5rPniU429Qd8d3n@cluster0.xpo9w.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const uri = 'mongodb://localhost/test';
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
