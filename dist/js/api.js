@@ -5,38 +5,45 @@ class Api {
         console.log(reg)
     }
     login = async () => {
-        let user = {
-            email: 'b@o',
-            password: 'bo'
-          };
-          
-          let response = await fetch('https://money-keeper21.herokuapp.com/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(user)
-          });
-          console.log(response)
-          let result = await response.json();
-          console.log(result);
+        try {
+            let user = {
+                email: 'b@o',
+                password: 'bo'
+              };
+              
+              let response = await fetch('https://money-keeper21.herokuapp.com/login', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(user)
+              });
+              console.log(response)
+              return await response.json();  
+        } catch (err) {
+            console.log(err)
+        }
     }
     register = async () => {
-        let user = {
-            name: 'John',
-            email: 'smith@n',
-            password: 'query'
-        };
-        
-        let response = await fetch('https://money-keeper21.herokuapp.com/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(user)
-        });
-        console.log(response)
-        return await response.json();
+        try {
+            let user = {
+                name: 'John',
+                email: 'smith@n',
+                password: 'query'
+            };
+            
+            let response = await fetch('https://money-keeper21.herokuapp.com/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(user)
+            });
+            console.log(response)
+            return await response.json();       
+        } catch (err) {
+            console.log(err)
+        }
     }
     user = async () => {
         try {
@@ -48,24 +55,28 @@ class Api {
         }
     }
     post = async () => {
-        let post = {
-            number: 4,
-            work: 'web-design',
-            contractor: 'ann',
-            cost: 344,
-            income: 'on',
-            regular: 'on'
-        };
-        
-        let response = await fetch('https://money-keeper21.herokuapp.com/post', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(post)
-        });
-        console.log(response)
-        return await response.json();
+        try {
+            let post = {
+                number: 4,
+                work: 'web-design',
+                contractor: 'ann',
+                cost: 344,
+                income: 'on',
+                regular: 'on'
+            };
+            
+            let response = await fetch('https://money-keeper21.herokuapp.com/post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(post)
+            });
+            console.log(response)
+            return await response.json();
+        } catch (err) {
+            console.log(err);
+        }
     }
     posts = async () => {
         try {
