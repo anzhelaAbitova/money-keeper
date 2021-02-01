@@ -1,6 +1,6 @@
 class Api {
     init = async () => {
-        this.register();
+        this.login();
         let reg = await this.posts();
         console.log(reg)
     }
