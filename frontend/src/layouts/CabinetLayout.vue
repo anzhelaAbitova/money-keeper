@@ -39,18 +39,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import IconMoon from '@/components/images-svg/icons/IconMoon.vue';
-import IconUser from '@/components/images-svg/icons/IconUser.vue';
-import Drawer from '@/components/cabinet/Drawer.vue';
 import { namespace } from 'vuex-class';
+import IconMoon from '../components/images-svg/icons/IconMoon.vue';
+import IconUser from '../components/images-svg/icons/IconUser.vue';
+import Drawer from '../components/cabinet/Drawer.vue';
 import { IModalState } from '../store/modules/modal/types';
 
 const Modal = namespace('modal');
 const User = namespace('user');
-
-// type AuthModalParams = {
-//   active: number;
-// }
 
 @Component({
   components: {
@@ -67,6 +63,8 @@ export default class CabinetLayout extends Vue {
 
   @User.Action private logout!: () => void;
 
+  @User.Action private getUserAvatar!: () => void;
+
   private userDropDownOpen = false;
 
   private modalConfirmOpenParams: IModalState = {
@@ -78,6 +76,10 @@ export default class CabinetLayout extends Vue {
       cb: this.confirmCb,
     },
     modalHeight: '200px',
+  }
+
+  created() {
+    this.getUserAvatar();
   }
 
   confirmCb(ev: boolean): void {

@@ -23,47 +23,18 @@
             Charts
           </div>
         </router-link> -->
-        <router-link class="app-drawer__rout" tag="div" to="/cabinet/history">
+        <router-link
+          v-for="(item, i) in getDrawerRoutes"
+          class="app-drawer__rout"
+          :class="{ 'app-drawer__footer' : item.routName === 'Settings' }"
+          :to="item.rout"
+          tag="div"
+          :key="'drwerrout' + i"
+        >
           <div class="app-drawer__rout-icon">
-            <IconAlarm />
+            <component :is="item.icon" />
           </div>
-          <div class="app-drawer__rout-name">
-            History
-          </div>
-        </router-link>
-        <router-link class="app-drawer__rout" tag="div" to="/cabinet/goals">
-          <div class="app-drawer__rout-icon">
-            <IconTrophy />
-          </div>
-          <div class="app-drawer__rout-name">
-            Goals
-          </div>
-        </router-link>
-        <router-link class="app-drawer__rout" tag="div" to="/cabinet/balance">
-          <div class="app-drawer__rout-icon">
-            <IconWallet />
-          </div>
-          <div class="app-drawer__rout-name">
-            Balance
-          </div>
-        </router-link>
-        <router-link class="app-drawer__rout" tag="div" to="/cabinet/new">
-          <div class="app-drawer__rout-icon">
-            <IconCamera />
-          </div>
-          <div class="app-drawer__rout-name">
-            Add new
-          </div>
-        </router-link>
-      </div>
-      <div class="app-drawer__footer">
-        <router-link class="app-drawer__rout" tag="div" to="/cabinet/settings">
-          <div class="app-drawer__rout-icon">
-            <IconSettings />
-          </div>
-          <div class="app-drawer__rout-name">
-            Settings
-          </div>
+          <div class="app-drawer__rout-name">{{ item.routName }}</div>
         </router-link>
       </div>
     </div>
@@ -71,14 +42,18 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import IconBussines from '@/components/images-svg/icons/IconBussines.vue';
-import IconCharts from '@/components/images-svg/icons/IconCharts.vue';
-import IconAlarm from '@/components/images-svg/icons/IconAlarm.vue';
-import IconCamera from '@/components/images-svg/icons/IconCamera.vue';
-import IconTrophy from '@/components/images-svg/icons/IconTrophy.vue';
-import IconWallet from '@/components/images-svg/icons/IconWallet.vue';
-import IconSettings from '@/components/images-svg/icons/IconSettings.vue';
+import { Component, Vue, Watch } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
+import IconBussines from '../images-svg/icons/IconBussines.vue';
+import IconCharts from '../images-svg/icons/IconCharts.vue';
+import IconAlarm from '../images-svg/icons/IconAlarm.vue';
+import IconCamera from '../images-svg/icons/IconCamera.vue';
+import IconTrophy from '../images-svg/icons/IconTrophy.vue';
+import IconWallet from '../images-svg/icons/IconWallet.vue';
+import IconSettings from '../images-svg/icons/IconSettings.vue';
+import { IDrawerRoutes } from '../../store/modules/global/types';
+
+const Global = namespace('global');
 
 @Component({
   components: {
@@ -93,11 +68,15 @@ import IconSettings from '@/components/images-svg/icons/IconSettings.vue';
 })
 
 export default class Drawer extends Vue {
+  @Global.Getter private getDrawerRoutes!: IDrawerRoutes;
+
   private isOpen = false;
 
-  private changeRoute(rout: string) {
-    this.$router.push(rout);
-    this.isOpen = false;
+  @Watch('$route')
+  private changeRoute(value: string) {
+    if (value) {
+      this.isOpen = false;
+    }
   }
 }
 </script>

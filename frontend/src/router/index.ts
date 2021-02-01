@@ -3,6 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router';
 import store from '../store';
 import Home from '../views/pages/Home.vue';
 import CabinetHome from '../views/cabinet/Home.vue';
+import Charts from '../views/cabinet/Charts.vue';
 import Settings from '../views/cabinet/Settings.vue';
 import History from '../views/cabinet/History.vue';
 import Goals from '../views/cabinet/Goals.vue';
@@ -39,50 +40,61 @@ const routes: Array<RouteConfig> = [
       layout: 'cabinet-layout',
       requiresAuth: true,
     },
-    children: [
-      {
-        path: 'history',
-        name: 'History',
-        component: History,
-        meta: {
-          layout: 'cabinet-layout',
-        },
-      },
-      {
-        path: 'goals',
-        name: 'Goals',
-        component: Goals,
-        meta: {
-          layout: 'cabinet-layout',
-        },
-      },
-      {
-        path: 'balance',
-        name: 'Balance',
-        component: Balance,
-        meta: {
-          layout: 'cabinet-layout',
-        },
-      },
-      {
-        path: 'new',
-        name: 'New',
-        component: New,
-        meta: {
-          layout: 'cabinet-layout',
-        },
-      },
-      {
-        path: 'settings',
-        name: 'Settings',
-        component: Settings,
-        meta: {
-          layout: 'cabinet-layout',
-        },
-      },
-    ],
   },
-
+  {
+    path: '/cabinet/charts',
+    name: 'Charts',
+    component: Charts,
+    meta: {
+      layout: 'cabinet-layout',
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/cabinet/history',
+    name: 'History',
+    component: History,
+    meta: {
+      layout: 'cabinet-layout',
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/cabinet/goals',
+    name: 'Goals',
+    component: Goals,
+    meta: {
+      layout: 'cabinet-layout',
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/cabinet/balance',
+    name: 'Balance',
+    component: Balance,
+    meta: {
+      layout: 'cabinet-layout',
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/cabinet/new',
+    name: 'New',
+    component: New,
+    meta: {
+      layout: 'cabinet-layout',
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/cabinet/settings',
+    name: 'Settings',
+    component: Settings,
+    meta: {
+      layout: 'cabinet-layout',
+      requiresAuth: true,
+    },
+  },
 ];
 
 const router = new VueRouter({

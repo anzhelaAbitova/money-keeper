@@ -9,6 +9,10 @@ const state = {
   token: localStorage.getItem('rsapp-token') || null,
   user: localStorage.getItem('rsapp-user') || '',
   request: false,
+  avatar: '',
+  name: 'Jane Doe',
+  status: 'active',
+  position: 'Web-designer',
 };
 
 const user: Module<IUserState, IRootState> = {

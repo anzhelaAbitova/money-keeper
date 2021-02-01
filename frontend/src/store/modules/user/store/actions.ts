@@ -2,10 +2,14 @@ import firebase from 'firebase/app';
 import { ActionTree } from 'vuex';
 import { IUserState } from '../types';
 import { IRootState } from '../../../types';
-import { AUTH_SUCCESS, LOGOUT, REG_SUCCESS } from './mutations-types';
+import {
+  AUTH_SUCCESS,
+  LOGOUT,
+  REG_SUCCESS,
+  SET_USER_AVATAR,
+} from './mutations-types';
 
 const actions: ActionTree<IUserState, IRootState> = {
-  // login({ dispatch, commit }, { email, password }) {
   login({ commit }, { email, password }) {
     return new Promise((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(email, password)
@@ -13,8 +17,6 @@ const actions: ActionTree<IUserState, IRootState> = {
         .then((res: any) => {
           const user = { token: res.user.refreshToken, user: { email: res.user.email } };
           commit(AUTH_SUCCESS, user);
-          // const uid = dispatch('getUid');
-          // console.log('uid = ', uid);
           resolve(user);
         })
         .catch((error) => {
@@ -50,10 +52,27 @@ const actions: ActionTree<IUserState, IRootState> = {
         });
     });
   },
-  // async getUid() {
-  //   const user = await firebase.auth().currentUser;
-  //   return user ? user.uid : null;
-  // },
+  setUserAvatar({ dispatch, commit }, payload: string) {
+    dispatch('getUid')
+      .then((userId) => {
+        firebase.database().ref(`users/${userId}`).set({ avatar: payload });
+      })
+      .then(() => {
+        commit(SET_USER_AVATAR, payload);
+      });
+  },
+  getUserAvatar({ dispatch, commit }) {
+    dispatch('getUid')
+      .then((userId) => firebase.database().ref(`users/${userId}`).once('value'))
+      .then((snapshot) => {
+        const avatar = (snapshot.val() && snapshot.val().avatar) || '';
+        commit(SET_USER_AVATAR, avatar);
+      });
+  },
+  getUid() {
+    const user = firebase.auth().currentUser;
+    return user ? user.uid : null;
+  },
 };
 
 export default actions;
