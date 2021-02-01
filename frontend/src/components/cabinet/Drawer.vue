@@ -7,64 +7,64 @@
   >
     <div class="app-drawer__inner">
       <div class="app-drawer__head">
-        <div class="app-drawer__icon">
+        <router-link class="app-drawer__icon" tag="div" to="/cabinet">
           <IconBussines />
-        </div>
+        </router-link>
         <div class="app-drawer__name">
           Small business money keeper
         </div>
       </div>
       <div class="app-drawer__nav">
-        <div class="app-drawer__rout" @click="changeRoute('/cabinet/home')">
+        <!-- <router-link class="app-drawer__rout" tag="div" to="/cabinet/charts">
           <div class="app-drawer__rout-icon">
             <IconCharts />
           </div>
           <div class="app-drawer__rout-name">
             Charts
           </div>
-        </div>
-        <div class="app-drawer__rout" @click="changeRoute('/cabinet/history')">
+        </router-link> -->
+        <router-link class="app-drawer__rout" tag="div" to="/cabinet/history">
           <div class="app-drawer__rout-icon">
             <IconAlarm />
           </div>
           <div class="app-drawer__rout-name">
             History
           </div>
-        </div>
-        <div class="app-drawer__rout" @click="changeRoute('/cabinet/goals')">
+        </router-link>
+        <router-link class="app-drawer__rout" tag="div" to="/cabinet/goals">
           <div class="app-drawer__rout-icon">
             <IconTrophy />
           </div>
           <div class="app-drawer__rout-name">
             Goals
           </div>
-        </div>
-        <div class="app-drawer__rout" @click="changeRoute('/cabinet/balance')">
+        </router-link>
+        <router-link class="app-drawer__rout" tag="div" to="/cabinet/balance">
           <div class="app-drawer__rout-icon">
             <IconWallet />
           </div>
           <div class="app-drawer__rout-name">
             Balance
           </div>
-        </div>
-        <div class="app-drawer__rout" @click="changeRoute('/cabinet/new')">
+        </router-link>
+        <router-link class="app-drawer__rout" tag="div" to="/cabinet/new">
           <div class="app-drawer__rout-icon">
             <IconCamera />
           </div>
           <div class="app-drawer__rout-name">
             Add new
           </div>
-        </div>
+        </router-link>
       </div>
       <div class="app-drawer__footer">
-        <div class="app-drawer__rout" @click="changeRoute('/cabinet/settings')">
+        <router-link class="app-drawer__rout" tag="div" to="/cabinet/settings">
           <div class="app-drawer__rout-icon">
             <IconSettings />
           </div>
           <div class="app-drawer__rout-name">
             Settings
           </div>
-        </div>
+        </router-link>
       </div>
     </div>
   </div>

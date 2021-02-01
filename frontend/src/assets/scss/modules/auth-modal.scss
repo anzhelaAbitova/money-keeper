@@ -79,4 +79,9 @@
         text-align: center;
         margin: auto 0;
     }
+
+    &__error {
+        min-height: 50px;
+        color: red;
+    }
 }

@@ -6,6 +6,11 @@
     text-transform: uppercase;
     cursor: pointer;
 
+    &.is-disable {
+        pointer-events: none;
+        opacity: 0.75;
+    }
+
     &-primary {
         background: linear-gradient(45deg, #3FFF7C 0%, #3FFBE0 100%);
         box-shadow: 3px 3px 5px rgba(29, 22, 22, 0.15);
@@ -14,6 +19,17 @@
 
         &:hover {
             color: $colorPurple2;
+        }
+    }
+
+    &-warning {
+        background-color: rgba(red, .4);
+        color: #fff;
+        text-shadow: 1px 1px rgba(black, 0.5);
+        transition: background-color .3s ease-in-out;
+
+        &:hover {
+            background-color: rgba(red, .6);
         }
     }
 

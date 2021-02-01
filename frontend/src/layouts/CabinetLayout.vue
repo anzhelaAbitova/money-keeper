@@ -21,6 +21,12 @@
           <div class="app-cabinet__user-dropdown" :class="{ 'is-open' : userDropDownOpen }">
             User dropdown menu<br>
             can be painting in other styles
+            <div class="app-cabinet__user-dropdown_row">
+              <button
+                class="btn btn-primary"
+                @click="userDropDownOpen = false; setModalState(modalConfirmOpenParams)"
+              >Log out</button>
+            </div>
           </div>
         </transition>
       </div>
@@ -36,6 +42,15 @@ import { Component, Vue } from 'vue-property-decorator';
 import IconMoon from '@/components/images-svg/icons/IconMoon.vue';
 import IconUser from '@/components/images-svg/icons/IconUser.vue';
 import Drawer from '@/components/cabinet/Drawer.vue';
+import { namespace } from 'vuex-class';
+import { IModalState } from '../store/modules/modal/types';
+
+const Modal = namespace('modal');
+const User = namespace('user');
+
+// type AuthModalParams = {
+//   active: number;
+// }
 
 @Component({
   components: {
@@ -46,6 +61,35 @@ import Drawer from '@/components/cabinet/Drawer.vue';
 })
 
 export default class CabinetLayout extends Vue {
+  @Modal.Action private setModalState!: (data: IModalState) => void;
+
+  @Modal.Action private closeModal!: () => void;
+
+  @User.Action private logout!: () => void;
+
   private userDropDownOpen = false;
+
+  private modalConfirmOpenParams: IModalState = {
+    modalComponentName: 'ConfirmModal',
+    modalState: true,
+    modalParams: {
+      confirm: false,
+      actionTitle: 'Are you sure?',
+      cb: this.confirmCb,
+    },
+    modalHeight: '200px',
+  }
+
+  confirmCb(ev: boolean): void {
+    this.closeModal();
+    if (ev) {
+      this.logout();
+      this.$router.push('/');
+    }
+  }
+
+  // private logOut(data: IModalState) {
+  //   this.setModalState(data);
+  // }
 }
 </script>

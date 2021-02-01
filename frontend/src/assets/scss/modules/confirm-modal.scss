@@ -1,0 +1,22 @@
+.confirm-modal {
+    display: flex;
+    align-items: stretch;
+    height: 200px;
+
+    &__content {
+        width: 100%;
+    }
+
+    &__title {
+        padding: 30px 50px;
+        font-size: 25px;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    &__row {
+        @extend %dfsa;
+        width: 100%;
+        padding: 30px 0;
+    }
+}
