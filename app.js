@@ -76,7 +76,7 @@ app.get('/*', (req, res) => {
 app.get('/', checkAuthenticated, (req, res) => {
   // res.render('index.ejs', { name: req.user.name, usersEjs: null })
 })
-
+*/
 app.get('/login', checkNotAuthenticated, (req, res) => {
    res.render('login.ejs')
 })
@@ -84,12 +84,13 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
 app.get('/register', checkNotAuthenticated, async (req, res) => {
   res.render('register.ejs', { usersEjs: null })
 })
-*/
+
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-  //successRedirect: '/',
-  //failureRedirect: '/login',
+  successRedirect: '/',
+  failureRedirect: '/login',
   failureFlash: true
-}))
+}
+))
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
   console.log(req.body)
