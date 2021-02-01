@@ -1,8 +1,9 @@
 class Api {
     init = async () => {
-        this.login();
+        let log = await this.login();
         let reg = await this.posts();
-        console.log(reg)
+        console.log(log)
+        //console.log(reg)
     }
     login = async () => {
         try {
@@ -19,9 +20,9 @@ class Api {
                 body: JSON.stringify(user)
               });
               console.log(response)
-              return await response.json();  
+              return response.json();  
         } catch (err) {
-            console.log(err)
+            return console.log(err)
         }
     }
     register = async () => {

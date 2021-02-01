@@ -91,8 +91,7 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true
-})
-)
+}))
 
 app.post('/register', checkNotAuthenticated, async (req, res, next) => {
   console.log(req.body)
@@ -119,6 +118,16 @@ app.post('/register', checkNotAuthenticated, async (req, res, next) => {
 app.get('/user', checkAuthenticated, (req, res) => {
   console.log(req.session.passport.user)
   User.findOne({ "_id": req.session.passport.user }, (err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500);
+    }
+    return res.send(docs);
+  })
+})
+
+app.get('/users', (req, res) => {
+  User.find({}, (err, docs) => {
     if (err) {
       console.log(err);
       return res.sendStatus(500);
