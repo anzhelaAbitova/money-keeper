@@ -5,8 +5,6 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const app = express()
 const MongoClient = require('mongodb').MongoClient;
-
-let user;
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -97,19 +95,19 @@ app.post('/register', checkNotAuthenticated, async (req, res, next) => {
   console.log(req.body)
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
-    user = new User({
+    const user = new User({
       username: req.body.username,
       email: req.body.email,
       password: hashedPassword
-    })
-    await user.save();
-    users.push(user);
+    });
+    await user.save(function(err){
+      if(err) return console.log(err);
+      return console.log("Сохранен объект", user);
+    });
     req.login(user, function(err) {
       if (err) { return next(err); }
       return res.redirect('/');
     });
-    console.log(user);
-    next();
   } catch {
     res.redirect('/register');
   }
