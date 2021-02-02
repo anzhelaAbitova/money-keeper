@@ -1,33 +1,35 @@
-<h1>Posts</h1>
-
-<form action="/post" method="POST">
-    <div>
-        <label for="number">Number</label>
-        <input type="number" name="number" id="number">
-    </div>
-    <div>
-        <label for="work">Work</label>
-        <input type="text" name="work" id="work" required>
-    </div>
-    <div>
-        <label for="cost">Cost</label>
-        <input type="number" name="cost" id="cost" required>
-    </div>
-    <div>
-        <label for="contractor">Contractor</label>
-        <input type="text" name="contractor" id="contractor" required>
-    </div>
-    <div>
-        <label for="income">Income?</label>
-        <input type="checkbox" name="income" id="income">
-    </div>
-    <div>
-        <label for="regular">Regular</label>
-        <input type="checkbox" name="regular" id="regular">
-    </div>
-    <button type="submit">Save</button>
-</form>
-<a href="/posts">Register</a>
-<script>
-//axios.defaults.withCredentials = true;
-</script>
+<%- include("head.ejs") %>
+<body>
+    <%- include("header.ejs") %>
+    <form action="" method="POST" id="makePost">
+        <div class="auth-modal__form-row">
+            <label for="number" class="app-input__label">Number</label>
+            <input type="number" name="number" id="number" class="app-input">
+        </div>
+        <div class="auth-modal__form-row">
+            <label for="work" class="app-input__label">Work</label>
+            <input type="text" name="work" id="work" required  class="app-input">
+        </div>
+        <div class="auth-modal__form-row">
+            <label for="cost" class="app-input__label">Cost</label>
+            <input type="number" name="cost" id="cost" required  class="app-input">
+        </div>
+        <div class="auth-modal__form-row">
+            <label for="contractor" class="app-input__label">Contractor</label>
+            <input type="text" name="contractor" id="contractor" required class="app-input">
+        </div>
+        <div class="auth-modal__form-row">
+            <label for="income" class="app-input__label">Income?</label>
+            <input type="checkbox" name="income" id="income" class="app-input">
+        </div>
+        <div class="auth-modal__form-row">
+            <label for="regular" class="app-input__label">Regular</label>
+            <input type="checkbox" name="regular" id="regular" class="app-input">
+        </div>
+        <div class="auth-modal__form-button">
+            <button type="submit" id="makePostBTN" class="btn btn-primary">Save post</button>
+        </div>
+    </form>
+    <%- include("scripts.ejs") %>
+</body>
+</html>

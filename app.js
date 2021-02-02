@@ -18,7 +18,7 @@ const connect = require('./mongoConnection');
 const User = require('./models').User;
 const Interaction = require('./models').Interaction;
 const Contractor = require('./models').Contractor;
-const interactionCrud = require('./crudRoutes/interactionCrud');
+//const interactionCrud = require('./crudRoutes/interactionCrud');
 const router = require('./routes/routes')
 const host = '127.0.0.1'
 const port = process.env.PORT || 3000;
@@ -67,16 +67,16 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname, "./dist")))
+app.use(express.static(path.join(__dirname, "./views")))
 /*
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, './dist', 'index.html'))
 })
-
+*/
 app.get('/', checkAuthenticated, (req, res) => {
   // res.render('index.ejs', { name: req.user.name, usersEjs: null })
 })
-*/
+
 app.get('/login', checkNotAuthenticated, (req, res) => {
    res.render('login.ejs')
 })
