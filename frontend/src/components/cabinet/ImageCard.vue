@@ -22,7 +22,7 @@
         <img v-else :src="avatar" alt="User avatar" width="274" height="246">
       </div>
       <div class="image-card__name">{{ getUserData.name }}</div>
-      <div class="image-card__description">Web-designer</div>
+      <div class="image-card__description">{{ getUserData.position }}</div>
     </div>
   </div>
 </template>
@@ -47,6 +47,7 @@ const User = namespace('user');
 })
 
 export default class ImageCard extends Vue {
+  // eslint-disable-next-line
   @User.Getter private getUserData!: any;
 
   @User.Action private setUserData!: (data: object) => void;
@@ -74,7 +75,8 @@ export default class ImageCard extends Vue {
       body: formData,
     })
       .then((response) => response.json())
-      .then((res) => {
+      .then(() => {
+        // const path = this.getUserData.uid;
         this.setUserData({ avatar: `https://beinweb.ru/api/images/${this.getUserData.uid}/${file.name}` });
         this.uploads += 1;
         this.loading = false;

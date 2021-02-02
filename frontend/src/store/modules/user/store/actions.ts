@@ -52,8 +52,9 @@ const actions: ActionTree<IUserState, IRootState> = {
         });
     });
   },
-  setUserData({ dispatch, commit }, payload) {
-    const data = { ...payload };
+  setUserData({ dispatch, commit, getters }, payload) {
+    let data = getters.getUserData;
+    data = { ...data, ...payload };
     return new Promise((resolve, reject) => {
       dispatch('getUid')
         .then((userId) => {
@@ -61,7 +62,7 @@ const actions: ActionTree<IUserState, IRootState> = {
           return userId;
         })
         .then((userId) => {
-          firebase.database().ref(`users/${userId}`).set({ user: payload });
+          firebase.database().ref(`users/${userId}`).set({ user: data });
         })
         .then((resp) => {
           commit(SET_USER_DATA, data);
