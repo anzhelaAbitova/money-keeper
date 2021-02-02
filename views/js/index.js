@@ -1,3 +1,5 @@
+const appDrawer = document.querySelector('.app-drawer');
+
 const makePost = document.querySelector('#makePost');
 makePost.addEventListener('submit', function async(e) {
     e.preventDefault();
@@ -23,4 +25,11 @@ makePost.addEventListener('submit', function async(e) {
 } catch (err) {
     console.log(err);
 }
+})
+
+appDrawer.addEventListener('mouseenter', function () {
+    appDrawer.classList.toggle('is-open');
+    appDrawer.addEventListener('mouseleave', function () {
+        appDrawer.classList.toggle('is-open');
+    })
 })

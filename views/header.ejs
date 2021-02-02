@@ -1,42 +1,93 @@
-<div>
-    <div
-      class="app-drawer"
-      :class="{ 'is-open' : isOpen }"
-      @mouseenter="isOpen = true"
-      @mouseleave="isOpen = false"
-    >
-      <div class="app-drawer__inner">
-        <div class="app-drawer__head">
-          <router-link class="app-drawer__icon" tag="div" to="/cabinet">
-            <IconBussines />
-          </router-link>
-          <div class="app-drawer__name">
-            Small business money keeper
-          </div>
-        </div>
-        <div class="app-drawer__nav">
-          <router-link class="app-drawer__rout" tag="div" to="/cabinet/charts">
-            <div class="app-drawer__rout-icon">
-              <IconCharts />
-            </div>
-            <div class="app-drawer__rout-name">
-              Charts
-            </div>
-          </router-link>
-          <router-link
-            v-for="(item, i) in getDrawerRoutes"
-            class="app-drawer__rout"
-            :class="{ 'app-drawer__footer' : item.routName === 'Settings' }"
-            :to="item.rout"
-            tag="div"
-            :key="'drwerrout' + i"
-          >
-            <div class="app-drawer__rout-icon">
-              <component :is="item.icon" />
-            </div>
-            <div class="app-drawer__rout-name">{{ item.routName }}</div>
-          </router-link>
+    <div class="app-cabinet__header">
+      <div class="app-cabinet__header-greeting">Hello, Jane Doe</div>
+      <div class="app-cabinet__header-description">This is your expenses and incomes</div>
+      <div class="app-cabinet__header-style">
+        <div class="app-cabinet__header-style_icon">
+          <a href="javascript:void(0);">
+            <span class="iconify" data-inline="false" data-icon="bx:bx-moon" style="color: #0f0f0f; font-size: 48px;"></span>
+          </a>
         </div>
       </div>
+      <div class="app-cabinet__header-user">
+        <a href="javascript:void(0);" @click="userDropDownOpen = !userDropDownOpen">
+          <span class="iconify" data-inline="false" data-icon="mdi-light:account" style="color: #0f0f0f; font-size: 81px;"></span>
+        </a>
+        <transition name="fade">
+          <div class="app-cabinet__user-dropdown" :class="{ 'is-open' : userDropDownOpen }">
+            User dropdown menu<br>
+            can be painting in other styles
+            <div class="app-cabinet__user-dropdown_row">
+              <button
+                class="btn btn-primary"
+                @click="userDropDownOpen = false; setModalState(modalConfirmOpenParams)"
+              >Log out</button>
+            </div>
+          </div>
+        </transition>
+      </div>
     </div>
+<div>
+  <div class="app-drawer">
+    <div class="app-drawer__inner">
+      <div class="app-drawer__head">
+        <div class="app-drawer__icon" tag="div" to="/cabinet">
+          <span class="iconify" data-inline="false" data-icon="ic:outline-business-center" style="font-size: 53px;"></span>
+        </div>
+        <div class="app-drawer__name">
+          Small business money keeper
+        </div>
+      </div>
+      <div class="app-drawer__nav">
+        <div class="app-drawer__rout" tag="div" to="/cabinet/charts">
+          <div class="app-drawer__rout-icon">
+            <span class="iconify" data-inline="false" data-icon="mdi-light:chart-bar" style="color: #e6f3f5; font-size: 24px;"></span>
+          </div>
+          <div class="app-drawer__rout-name">
+            Charts
+          </div>
+        </div>
+        <div class="app-drawer__rout" tag="div" to="/cabinet/charts">
+          <div class="app-drawer__rout-icon">
+            <span class="iconify" data-inline="false" data-icon="mdi-light:alarm" style="color: #e6f3f5; font-size: 24px;"></span>
+          </div>
+          <div class="app-drawer__rout-name">
+            History
+          </div>
+        </div>
+        <div class="app-drawer__rout" tag="div" to="/cabinet/charts">
+          <div class="app-drawer__rout-icon">
+            <span class="iconify" data-inline="false" data-icon="mdi-light:trophy" style="color: #e6f3f5; font-size: 24px;"></span>
+          </div>
+          <div class="app-drawer__rout-name">
+            Goals
+          </div>
+        </div>
+        <div class="app-drawer__rout" tag="div" to="/cabinet/charts">
+          <div class="app-drawer__rout-icon">
+            <span class="iconify" data-inline="false" data-icon="mdi-light:wallet" style="color: #e6f3f5; font-size: 24px;"></span>
+          </div>
+          <div class="app-drawer__rout-name">
+            Balance
+          </div>
+        </div>
+        <div class="app-drawer__rout" tag="div" to="/cabinet/charts">
+          <div class="app-drawer__rout-icon">
+            <span class="iconify" data-inline="false" data-icon="mdi-light:camera" style="color: #e6f3f5; font-size: 24px;"></span>
+          </div>
+          <div class="app-drawer__rout-name">
+            Add new
+          </div>
+        </div>
+        <div class="app-drawer__rout" tag="div" to="/cabinet/charts">
+          <div class="app-drawer__rout-icon">
+            <span class="iconify" data-inline="false" data-icon="mdi-light:cog" style="color: #e6f3f5; font-size: 24px;"></span>
+          </div>
+          <div class="app-drawer__rout-name">
+            Settings
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
   </div>

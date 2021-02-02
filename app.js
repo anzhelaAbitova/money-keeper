@@ -139,7 +139,6 @@ app.get('/users', (req, res) => {
 })
 
 app.get('/post', checkAuthenticated, (req, res) => {
-  console.log(req)
   res.render('post.ejs');
 })
 
@@ -171,6 +170,10 @@ app.get('./contractor', checkAuthenticated, (req, res) => {
   //res.render('contractor.ejs');
 })
 */
+
+app.get('/history', checkAuthenticated, async (req, res) => {
+  res.render('history.ejs')
+})
 app.post('/contractor', checkAuthenticated, async (req, res) => {
   try {
     const contractor = new Contractor ({
