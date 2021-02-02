@@ -26,4 +26,17 @@
     &__title {
         text-align: center;
     }
+
+    &__form {
+        height: 100%;
+    }
+
+    &__form-row {
+        padding: 0 0 30px;
+
+        .btn {
+            max-width: 200px;
+            margin: 0 auto;
+        }
+    }
 }

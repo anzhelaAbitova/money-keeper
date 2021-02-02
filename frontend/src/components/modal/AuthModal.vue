@@ -65,9 +65,9 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import { IAppInput } from '@/types';
-import AppInput from '@/components/elements/AppInput.vue';
 import { namespace } from 'vuex-class';
+import { IAppInput } from '../../types';
+import AppInput from '../elements/AppInput.vue';
 
 const Modal = namespace('modal');
 const User = namespace('user');

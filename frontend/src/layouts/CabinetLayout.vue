@@ -63,7 +63,7 @@ export default class CabinetLayout extends Vue {
 
   @User.Action private logout!: () => void;
 
-  @User.Action private getUserAvatar!: () => void;
+  @User.Action private getUserData!: () => void;
 
   private userDropDownOpen = false;
 
@@ -79,7 +79,7 @@ export default class CabinetLayout extends Vue {
   }
 
   created() {
-    this.getUserAvatar();
+    this.getUserData();
   }
 
   confirmCb(ev: boolean): void {

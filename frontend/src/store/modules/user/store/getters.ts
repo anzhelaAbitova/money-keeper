@@ -5,8 +5,7 @@ import { IUserState } from '../types';
 const getters: GetterTree<IUserState, IRootState> = {
   isLoggedIn: (state: IUserState) => !!state.token,
   user: (state: IUserState) => state.user,
-  getUserAvatar: (state: IUserState) => state.avatar,
-  getUserName: (state: IUserState) => state.name,
+  getUserData: (state: IUserState) => state.data,
 };
 
 export default getters;

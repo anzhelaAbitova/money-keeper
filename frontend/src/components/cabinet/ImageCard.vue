@@ -16,12 +16,12 @@
         <div v-if="loading" class="image-card__image-loading">
           <Loader />
         </div>
-        <div v-else-if="!getUserAvatar" class="image-card__image-default">
+        <div v-else-if="!avatar" class="image-card__image-default">
           <IconUser />
         </div>
-        <img v-else :src="getUserAvatar" alt="User avatar" width="274" height="246">
+        <img v-else :src="avatar" alt="User avatar" width="274" height="246">
       </div>
-      <div class="image-card__name">{{ getUserName }}</div>
+      <div class="image-card__name">{{ getUserData.name }}</div>
       <div class="image-card__description">Web-designer</div>
     </div>
   </div>
@@ -47,24 +47,26 @@ const User = namespace('user');
 })
 
 export default class ImageCard extends Vue {
-  @User.Getter private getUserAvatar!: string;
+  @User.Getter private getUserData!: any;
 
-  @User.Getter private getUserName!: string;
-
-  @User.Action private setUserAvatar!: (path: string) => void;
+  @User.Action private setUserData!: (data: object) => void;
 
   private uploads = 0;
 
   private loading = false;
 
+  get avatar() {
+    return this.getUserData?.avatar;
+  }
+
   private async upload(event: Event) {
     const target = event.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
     const formData = new FormData();
-    formData.append('user', this.getUserName);
+    formData.append('user', this.getUserData.uid);
     formData.append('file', file);
 
-    if (this.getUserAvatar !== '') await this.deleteAvatar();
+    if (this.avatar !== '') await this.deleteAvatar();
     this.loading = true;
 
     await fetch('https://beinweb.ru/api/save-image.php', {
@@ -73,7 +75,7 @@ export default class ImageCard extends Vue {
     })
       .then((response) => response.json())
       .then((res) => {
-        this.setUserAvatar(`https://beinweb.ru/api/images/${res[0].dir}/${file.name}`);
+        this.setUserData({ avatar: `https://beinweb.ru/api/images/${this.getUserData.uid}/${file.name}` });
         this.uploads += 1;
         this.loading = false;
       })
@@ -84,7 +86,7 @@ export default class ImageCard extends Vue {
   }
 
   private async deleteAvatar() {
-    const src = this.getUserAvatar.replace('https://beinweb.ru/api/images/', '');
+    const src = this.avatar.replace('https://beinweb.ru/api/images/', '');
     const formData = new FormData();
     formData.append('dir', src);
     this.loading = true;
@@ -94,7 +96,7 @@ export default class ImageCard extends Vue {
     })
       .then((response) => response.json())
       .then(() => {
-        this.setUserAvatar('');
+        this.setUserData({ avatar: '' });
       })
       .catch((error) => console.log(error));
     this.loading = false;

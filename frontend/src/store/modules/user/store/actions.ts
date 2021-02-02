@@ -6,7 +6,7 @@ import {
   AUTH_SUCCESS,
   LOGOUT,
   REG_SUCCESS,
-  SET_USER_AVATAR,
+  SET_USER_DATA,
 } from './mutations-types';
 
 const actions: ActionTree<IUserState, IRootState> = {
@@ -52,21 +52,30 @@ const actions: ActionTree<IUserState, IRootState> = {
         });
     });
   },
-  setUserAvatar({ dispatch, commit }, payload: string) {
-    dispatch('getUid')
-      .then((userId) => {
-        firebase.database().ref(`users/${userId}`).set({ avatar: payload });
-      })
-      .then(() => {
-        commit(SET_USER_AVATAR, payload);
-      });
+  setUserData({ dispatch, commit }, payload) {
+    const data = { ...payload };
+    return new Promise((resolve, reject) => {
+      dispatch('getUid')
+        .then((userId) => {
+          data.uid = userId;
+          return userId;
+        })
+        .then((userId) => {
+          firebase.database().ref(`users/${userId}`).set({ user: payload });
+        })
+        .then((resp) => {
+          commit(SET_USER_DATA, data);
+          resolve(resp);
+        })
+        .catch((err) => reject(err));
+    });
   },
-  getUserAvatar({ dispatch, commit }) {
+  getUserData({ dispatch, commit }) {
     dispatch('getUid')
       .then((userId) => firebase.database().ref(`users/${userId}`).once('value'))
       .then((snapshot) => {
-        const avatar = (snapshot.val() && snapshot.val().avatar) || '';
-        commit(SET_USER_AVATAR, avatar);
+        const data = (snapshot.val() && snapshot.val().user) || '';
+        commit(SET_USER_DATA, data);
       });
   },
   getUid() {
