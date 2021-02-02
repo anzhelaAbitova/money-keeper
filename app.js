@@ -102,12 +102,15 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
       password: hashedPassword
     });
     await user.save(function(err){
-      if(err) return console.log(err);
+      if(err) {
+        console.log(err);
+        return res.send('Such user already exist!');
+      }
+      req.login(user, function(err) {
+        if (err) { return console.log(err); }
+        return console.log('you in');
+      });
       return console.log("Сохранен объект", user);
-    });
-    req.login(user, function(err) {
-      if (err) { return next(err); }
-      return console.log('you in');
     });
   } catch {
     res.redirect('/register');

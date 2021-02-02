@@ -5,16 +5,16 @@ const userScheme = new Schema({
     username: {
       type: String,
       required: true,
-      index: { 
-        unique: true 
-      }
+      unique: true,
+      index: true,
+      trim: true,
     },
     email: {
       type: String,
       required: true,
-      index: { 
-        unique: true 
-      }
+      unique: true,
+      index: true,
+      trim: true,
     },
     password: {
       type: String,
