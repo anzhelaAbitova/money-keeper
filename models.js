@@ -6,15 +6,18 @@ const userScheme = new Schema({
       type: String,
       required: true,
       unique: true,
-      index: true,
-      trim: true,
+      index: { 
+        unique: true,
+        dropDups: true 
+      }
     },
     email: {
       type: String,
       required: true,
-      unique: true,
-      index: true,
-      trim: true,
+      index: { 
+        unique: true, 
+        dropDups: true 
+      }
     },
     password: {
       type: String,

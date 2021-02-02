@@ -86,14 +86,13 @@ app.get('/register', checkNotAuthenticated, async (req, res) => {
 })
 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-  successRedirect: '/',
+  successRedirect: '/cabinet/home',
   failureRedirect: '/login',
   failureFlash: true
 }
 ))
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
-  console.log(req.body)
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
     const user = new User({
@@ -108,6 +107,7 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
       }
       req.login(user, function(err) {
         if (err) { return console.log(err); }
+        res.redirect('/cabinet/home')
         return console.log('you in');
       });
       return console.log("Сохранен объект", user);
