@@ -92,3 +92,4 @@ class Api {
 
 const api = new Api();
 api.init();
+module.exports = api;
