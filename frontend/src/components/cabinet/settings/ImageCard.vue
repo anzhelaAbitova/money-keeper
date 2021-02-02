@@ -21,8 +21,8 @@
         </div>
         <img v-else :src="avatar" alt="User avatar" width="274" height="246">
       </div>
-      <div class="image-card__name">{{ getUserData.name }}</div>
-      <div class="image-card__description">{{ getUserData.position }}</div>
+      <div class="image-card__name">{{ userData.name }}</div>
+      <div class="image-card__description">{{ userData.position }}</div>
     </div>
   </div>
 </template>
@@ -30,10 +30,10 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
-import IconEdit from '../images-svg/icons/IconEdit.vue';
-import IconUser from '../images-svg/icons/IconUser.vue';
-import IconDelete from '../images-svg/icons/IconDelete.vue';
-import Loader from './AppLoadingPlaceholder.vue';
+import IconEdit from '../../images-svg/icons/IconEdit.vue';
+import IconUser from '../../images-svg/icons/IconUser.vue';
+import IconDelete from '../../images-svg/icons/IconDelete.vue';
+import Loader from '../AppLoadingPlaceholder.vue';
 
 const User = namespace('user');
 
@@ -48,7 +48,7 @@ const User = namespace('user');
 
 export default class ImageCard extends Vue {
   // eslint-disable-next-line
-  @User.Getter private getUserData!: any;
+  @User.Getter private userData!: any;
 
   @User.Getter private user!: string;
 
@@ -59,7 +59,7 @@ export default class ImageCard extends Vue {
   private loading = false;
 
   get avatar() {
-    return this.getUserData?.avatar;
+    return this.userData?.avatar;
   }
 
   private async upload(event: Event) {
@@ -78,7 +78,6 @@ export default class ImageCard extends Vue {
     })
       .then((response) => response.json())
       .then(() => {
-        // const path = this.getUserData.uid;
         this.setUserData({
           avatar: `https://beinweb.ru/api/images/${this.user}/${file.name}`,
         });

@@ -15,14 +15,6 @@
         </div>
       </div>
       <div class="app-drawer__nav">
-        <!-- <router-link class="app-drawer__rout" tag="div" to="/cabinet/charts">
-          <div class="app-drawer__rout-icon">
-            <IconCharts />
-          </div>
-          <div class="app-drawer__rout-name">
-            Charts
-          </div>
-        </router-link> -->
         <router-link
           v-for="(item, i) in getDrawerRoutes"
           class="app-drawer__rout"
@@ -72,12 +64,23 @@ const Global = namespace('global');
 export default class Drawer extends Vue {
   @Global.Getter private getDrawerRoutes!: IDrawerRoutes;
 
+  @Global.Getter private getRoutTitle!: (rout: string) => void;
+
   private isOpen = false;
+
+  created() {
+    this.emitHeadTitle();
+  }
+
+  emitHeadTitle() {
+    this.$emit('changeRout', this.getRoutTitle(this.$route.fullPath));
+  }
 
   @Watch('$route')
   private changeRoute(value: string) {
     if (value) {
       this.isOpen = false;
+      this.emitHeadTitle();
     }
   }
 }

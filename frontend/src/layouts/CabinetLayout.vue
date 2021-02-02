@@ -1,11 +1,11 @@
 <template>
   <div class="app-cabinet">
     <div class="app-cabinet__aside">
-      <Drawer />
+      <Drawer @changeRout="headerTitle = $event" />
     </div>
     <div class="app-cabinet__header">
-      <div class="app-cabinet__header-greeting">Hello, Jane Doe</div>
-      <div class="app-cabinet__header-description">This is your expenses and incomes</div>
+      <div class="app-cabinet__header-greeting">Hello, {{ userData.name || 'Honey' }}</div>
+      <div class="app-cabinet__header-description">{{ headerTitle }}</div>
       <div class="app-cabinet__header-style">
         <div class="app-cabinet__header-style_icon">
           <a href="javascript:void(0);">
@@ -32,21 +32,25 @@
       </div>
     </div>
     <main class="app-cabinet__main">
-      <slot/>
+      <slot />
     </main>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+// eslint-disable-next-line
+import VueRouter from 'vue-router';
 import { namespace } from 'vuex-class';
 import IconMoon from '../components/images-svg/icons/IconMoon.vue';
 import IconUser from '../components/images-svg/icons/IconUser.vue';
 import Drawer from '../components/cabinet/Drawer.vue';
 import { IModalState } from '../store/modules/modal/types';
+import { IUserData } from '../store/modules/user/types';
 
 const Modal = namespace('modal');
 const User = namespace('user');
+const Company = namespace('Company');
 
 @Component({
   components: {
@@ -65,7 +69,13 @@ export default class CabinetLayout extends Vue {
 
   @User.Action private getUserData!: () => void;
 
+  @User.Getter private userData?: IUserData;
+
+  @Company.Action private clearCompanyData!: () => void;
+
   private userDropDownOpen = false;
+
+  private headerTitle = '';
 
   private modalConfirmOpenParams: IModalState = {
     modalComponentName: 'ConfirmModal',
@@ -90,8 +100,8 @@ export default class CabinetLayout extends Vue {
     }
   }
 
-  // private logOut(data: IModalState) {
-  //   this.setModalState(data);
-  // }
+  beforedestroy() {
+    this.clearCompanyData();
+  }
 }
 </script>

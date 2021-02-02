@@ -8,6 +8,7 @@ import {
   REG_SUCCESS,
   SET_USER_DATA,
 } from './mutations-types';
+import { CLEAR_STATE } from '../../company/store/mutations-types';
 
 const actions: ActionTree<IUserState, IRootState> = {
   login({ commit }, { email, password }) {
@@ -25,7 +26,7 @@ const actions: ActionTree<IUserState, IRootState> = {
         });
     });
   },
-  logout({ commit }) {
+  logout({ dispatch, commit }) {
     return new Promise((resolve, reject) => {
       firebase.auth().signOut()
         .then(() => {
@@ -55,7 +56,7 @@ const actions: ActionTree<IUserState, IRootState> = {
     });
   },
   setUserData({ dispatch, commit, getters }, payload) {
-    let data = getters.getUserData;
+    let data = getters.userData;
     data = { ...data, ...payload };
     return new Promise((resolve, reject) => {
       dispatch('getUid')

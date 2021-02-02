@@ -9,41 +9,15 @@
     </div>
     <div class="app-content__body">
       <transition name="fade" mode="out-in">
-        <div v-if="activeTab === 0" class="app-content__page">
-          <div class="app-content__col">
-            <div class="app-content__title">
-              <h4>Avatar</h4>
-            </div>
-            <ImageCard />
-          </div>
-          <div class="app-content__col">
-            <div class="app-content__title">
-              <h4>Personal info</h4>
-            </div>
-            <form class="app-content__form" @submit.prevent>
-              <div
-                v-for="(item, i) in inputNames"
-                class="app-content__form-row"
-                :key="'jashkaj' + i"
-              >
-                <AppInput :params="item" @changeInput="inputNames[i].value = $event" />
-              </div>
-              <div class="app-content__form-row">
-                <div
-                  class="btn btn-primary"
-                  :class="{ 'is-disable' : !inputNames[0].value && !inputNames[1].value }"
-                  @click="savePersonalData"
-                >Save</div>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div v-if="activeTab === 1" class="app-content__page">
-          company data
-        </div>
-        <div v-if="activeTab === 2" class="app-content__page">
-          app settings
-        </div>
+        <template v-if="activeTab === 0">
+          <SettingsTab1 />
+        </template>
+        <template v-if="activeTab === 1">
+          <SettingsTab2 />
+        </template>
+        <template v-if="activeTab === 2">
+          <SettingsTab3 />
+        </template>
       </transition>
     </div>
   </div>
@@ -53,64 +27,45 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import HeadTabs from '../../components/cabinet/HeadTabs.vue';
-import ImageCard from '../../components/cabinet/ImageCard.vue';
-import AppInput from '../../components/elements/AppInput.vue';
-import { IAppInput } from '../../types';
+import SettingsTab1 from '../../components/cabinet/settings/SettingsTab1.vue';
+import SettingsTab2 from '../../components/cabinet/settings/SettingsTab2.vue';
+import SettingsTab3 from '../../components/cabinet/settings/SettingsTab3.vue';
 
 const User = namespace('user');
+
+const Company = namespace('company');
 
 @Component({
   components: {
     HeadTabs,
-    ImageCard,
-    AppInput,
+    SettingsTab1,
+    SettingsTab2,
+    SettingsTab3,
   },
 })
 
 export default class Settings extends Vue {
   // eslint-disable-next-line
-  @User.Getter private getUserData!: any;
+  @User.Getter private userData!: any;
 
   @User.Action private setUserData!: (data: object) => void;
 
-  get username() {
-    return this.getUserData?.name || '';
-  }
-
-  get userposition() {
-    return this.getUserData?.position || '';
-  }
+  @Company.Action private getCompanyData!: () => void;
 
   private activeTab = 0;
 
   private tabs = ['Acount settings', 'Company data', 'Aplication settings'];
 
-  private inputNames: Array<IAppInput> = [
-    {
-      label: 'Change name',
-      type: 'text',
-      name: 'user-name',
-      value: this.username,
-      placeholder: 'Your Name',
-      hasBlurCheck: false,
-      minLength: 3,
-    },
-    {
-      label: 'Change position',
-      type: 'text',
-      name: 'position',
-      value: this.userposition,
-      placeholder: 'Your position',
-      hasBlurCheck: false,
-      minLength: 3,
-    },
-  ];
-
-  private savePersonalData() {
-    this.setUserData({
-      name: this.inputNames[0].value,
-      position: this.inputNames[1].value,
-    });
+  created() {
+    this.getCompanyData();
   }
+
+  // mounted() {
+  //   const timerId = setTimeout(() => {
+  //     this.inputNames[0].value = this.userData?.name;
+  //     this.inputNames[1].value = this.userData?.position;
+  //     clearTimeout(timerId);
+  //   }, 500);
+  // }
 }
 </script>

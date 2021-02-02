@@ -1,6 +1,10 @@
 <template>
   <div class="app-input__wrapper">
-    <label v-if="params.label" class="app-input__label" for="login">{{ params.label }}</label>
+    <label
+      v-if="params.label"
+      class="app-input__label"
+      :for="params.name"
+    >{{ params.label }}</label>
     <input
       :type="params.type"
       :name="params.login"
@@ -8,6 +12,7 @@
       :value="params.value"
       class="app-input"
       :class="{ 'is-error' : isError }"
+      :id="params.name"
       @blur="checkInputBlur($event.target.value)"
       @focus="isError = false"
       @input="$emit('changeInput', $event.target.value)"
@@ -21,7 +26,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import { IAppInput } from '@/types';
+import { IAppInput } from '../../types';
 
 @Component
 

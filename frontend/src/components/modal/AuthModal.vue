@@ -65,6 +65,8 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
+// eslint-disable-next-line
+import VueRouter from 'vue-router';
 import { namespace } from 'vuex-class';
 import { IAppInput } from '../../types';
 import AppInput from '../elements/AppInput.vue';

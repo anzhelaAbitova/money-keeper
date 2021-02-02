@@ -32,7 +32,11 @@
     }
 
     &__form-row {
-        padding: 0 0 30px;
+        padding: 10px 0;
+
+        &--top_bordered {
+            border-top: 1px dashed $colorBlue1;
+        }
 
         .btn {
             max-width: 200px;
