@@ -45,6 +45,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import IconBussines from '../images-svg/icons/IconBussines.vue';
+import IconClients from '../images-svg/icons/IconClients.vue';
 import IconCharts from '../images-svg/icons/IconCharts.vue';
 import IconAlarm from '../images-svg/icons/IconAlarm.vue';
 import IconCamera from '../images-svg/icons/IconCamera.vue';
@@ -58,6 +59,7 @@ const Global = namespace('global');
 @Component({
   components: {
     IconBussines,
+    IconClients,
     IconCharts,
     IconAlarm,
     IconCamera,

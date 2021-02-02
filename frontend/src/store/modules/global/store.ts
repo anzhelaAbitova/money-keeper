@@ -32,10 +32,10 @@ const state = {
       headerTitle: 'This is your expenses and incomes',
     },
     {
-      rout: '/cabinet/new',
-      routName: 'New action',
-      icon: 'IconCamera',
-      headerTitle: 'Add your new action',
+      rout: '/cabinet/clients',
+      routName: 'Clients',
+      icon: 'IconClients',
+      headerTitle: 'This is your clients',
     },
     {
       rout: '/cabinet/settings',

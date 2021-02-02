@@ -9,10 +9,10 @@
     transition: width .3s ease-in-out;
 
     &.is-open {
-        width: 208px;
+        width: 228px;
 
         .app-drawer__inner {
-            width: 208px;
+            width: 228px;
         }
     }
 
@@ -74,7 +74,7 @@
 
     &__rout-icon {
         width: 55px;
-        padding: 6px 0 0;
+        padding: 8px 0 0;
         text-align: center;
 
         &:after {

@@ -8,6 +8,8 @@ import 'firebase/database';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+
+// import the styles
 import './assets/scss/main.scss';
 
 Vue.use(VModal, { componentName: 'AppModal', dynamicDefaults: { height: 'auto' } });
