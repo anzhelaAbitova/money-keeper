@@ -48,7 +48,7 @@
           <div class="auth-modal__form-button">
             <button
               class="btn btn-primary"
-              :class="{ 'is-disable' : !getRegBtnDisable }"
+              :class="{ 'is-disable' : getRegBtnDisable }"
               @click="regUser"
             >
               Register me
@@ -92,9 +92,9 @@ export default class AuthModal extends Vue {
 
   @Modal.Action private setModalState!: (ev: boolean) => void;
 
-  @User.Action private login!: ({ email, password }: ILoginUser) => Promise<string>;
+  // @User.Action private login!: ({ email, password }: ILoginUser) => Promise<string>;
 
-  @User.Action private register!: ({ email, password }: ILoginUser) => Promise<string>;
+  // @User.Action private register!: ({ email, password }: ILoginUser) => Promise<string>;
 
   private activeTab = 0;
 
@@ -113,6 +113,15 @@ export default class AuthModal extends Vue {
   };
 
   private inputsLoginData: IAppInput[] = [
+    {
+      label: 'Name:',
+      type: 'text',
+      name: 'username',
+      value: '',
+      placeholder: 'Your name',
+      hasBlurCheck: true,
+      minLength: 5,
+    },
     {
       label: 'Email:',
       type: 'email',
@@ -134,37 +143,54 @@ export default class AuthModal extends Vue {
   ];
 
   get getRegBtnDisable() {
-    const email = this.inputsLoginData[0].value && this.inputsLoginData[0].value.length > 5;
-    const pass = this.inputsLoginData[1].value && this.inputsLoginData[1].value.length > 5;
-    const cPass = this.inputConfirmData.value === this.inputsLoginData[1].value;
-    return email && pass && cPass;
+    const name = this.inputsLoginData[0].value && this.inputsLoginData[0].value.length > 5;
+    const email = this.inputsLoginData[1].value && this.inputsLoginData[1].value.length > 5;
+    const pass = this.inputsLoginData[2].value && this.inputsLoginData[2].value.length > 5;
+    const cPass = this.inputConfirmData.value === this.inputsLoginData[2].value;
+    return name && email && pass && cPass;
   }
 
   mounted() {
     this.activeTab = this.params.active;
   }
 
-  private regUser() {
-    this.register({
-      email: this.inputsLoginData[0].value,
-      password: this.inputsLoginData[1].value,
-    })
-      .then(() => {
-        this.goToCabinet('/cabinet/settings');
-      })
-      .catch((error) => {
-        this.errorMessageReg = error.message;
+  private async regUser() {
+    try {
+      const user = {
+        username: this.inputsLoginData[0].value,
+        email: this.inputsLoginData[1].value,
+        password: this.inputsLoginData[2].value,
+      };
+      const response = await fetch('https://money-keeper21.herokuapp.com/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify(user),
       });
+      response.json();
+      return this.goToCabinet('/cabinet/settings');
+    } catch (err) {
+      return console.log(err);
+    }
   }
 
   private async signIn(data: ILoginUser) {
-    this.login(data)
-      .then(() => {
-        this.goToCabinet('/cabinet');
-      })
-      .catch((error) => {
-        this.errorMessageLogin = error.message;
+    try {
+      const user = data;
+      const response = await fetch('https://money-keeper21.herokuapp.com/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify(user),
       });
+      console.log(response);
+      response.json();
+      return this.goToCabinet('/cabinet/settings');
+    } catch (err) {
+      return console.log(err);
+    }
   }
 
   private goToCabinet(path: string) {
