@@ -1,4 +1,3 @@
-<%- include("head.ejs") %>
 <h1>Login</h1>
 <% if (messages.error) { %>
     <%= messages.error %>
@@ -14,11 +13,9 @@
     </div>
     <button type="submit">Login</button>
 </form>
-<<<<<<< Updated upstream
 <a href="/register">Register</a>
-=======
-<a href="/register">Register</a>
-<%- include("scripts.ejs") %>
-</body>
-</html>
->>>>>>> Stashed changes
+<script>
+    fetch('/login', {credentials: 'include'})
+    .then(res => res.json())
+    .then(json => console.log(json))
+</script>

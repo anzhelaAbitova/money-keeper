@@ -1,6 +1,18 @@
+<<<<<<< Updated upstream
 <h1>Hello</h1>
 <p><%= name %></p>
 <p><%= usersEjs.name %></p>
 <form action="/logout?_method=DELETE" method="POST">
     <button type="submit">Log out</button>
 </form>
+=======
+<%- include("head.ejs") %>
+<body>
+    <noscript>
+        <strong>We're sorry but frontend doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <%- include("scripts.ejs") %>
+</body>
+</html>
+>>>>>>> Stashed changes
