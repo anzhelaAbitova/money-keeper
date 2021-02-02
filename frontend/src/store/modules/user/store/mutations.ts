@@ -11,19 +11,26 @@ const mutations: MutationTree<IUserState> = {
   [AUTH_SUCCESS](state, { token, user }) {
     state.token = token;
     localStorage.setItem('rsapp-token', token);
-    state.user = user;
-    localStorage.setItem('rsapp-user', JSON.stringify(user));
+    state.user = user.email;
+    localStorage.setItem('rsapp-user', user.email);
   },
   [LOGOUT](state) {
     state.token = null;
     state.user = '';
+    state.data = {
+      avatar: '',
+      name: '',
+      status: '',
+      position: '',
+      uid: '',
+    };
     localStorage.clear();
   },
   [REG_SUCCESS](state, { token, user }) {
     state.token = token;
     localStorage.setItem('rsapp-token', token);
-    state.user = user;
-    localStorage.setItem('rsapp-user', JSON.stringify(user));
+    state.user = user.email;
+    localStorage.setItem('rsapp-user', user.email);
   },
   [SET_USER_DATA](state, payload = '') {
     state.data = { ...state.data, ...payload };

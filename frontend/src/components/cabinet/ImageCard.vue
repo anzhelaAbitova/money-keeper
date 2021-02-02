@@ -50,6 +50,8 @@ export default class ImageCard extends Vue {
   // eslint-disable-next-line
   @User.Getter private getUserData!: any;
 
+  @User.Getter private user!: string;
+
   @User.Action private setUserData!: (data: object) => void;
 
   private uploads = 0;
@@ -64,7 +66,7 @@ export default class ImageCard extends Vue {
     const target = event.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
     const formData = new FormData();
-    formData.append('user', this.getUserData.uid);
+    formData.append('user', this.user);
     formData.append('file', file);
 
     if (this.avatar !== '') await this.deleteAvatar();
@@ -77,7 +79,9 @@ export default class ImageCard extends Vue {
       .then((response) => response.json())
       .then(() => {
         // const path = this.getUserData.uid;
-        this.setUserData({ avatar: `https://beinweb.ru/api/images/${this.getUserData.uid}/${file.name}` });
+        this.setUserData({
+          avatar: `https://beinweb.ru/api/images/${this.user}/${file.name}`,
+        });
         this.uploads += 1;
         this.loading = false;
       })

@@ -68,9 +68,18 @@ const User = namespace('user');
 })
 
 export default class Settings extends Vue {
+  // eslint-disable-next-line
   @User.Getter private getUserData!: any;
 
   @User.Action private setUserData!: (data: object) => void;
+
+  get username() {
+    return this.getUserData?.name || '';
+  }
+
+  get userposition() {
+    return this.getUserData?.position || '';
+  }
 
   private activeTab = 0;
 
@@ -81,7 +90,7 @@ export default class Settings extends Vue {
       label: 'Change name',
       type: 'text',
       name: 'user-name',
-      value: '',
+      value: this.username,
       placeholder: 'Your Name',
       hasBlurCheck: false,
       minLength: 3,
@@ -90,17 +99,12 @@ export default class Settings extends Vue {
       label: 'Change position',
       type: 'text',
       name: 'position',
-      value: '',
+      value: this.userposition,
       placeholder: 'Your position',
       hasBlurCheck: false,
       minLength: 3,
     },
   ];
-
-  mounted() {
-    if (this.getUserData?.name) this.inputNames[0].value = this.getUserData?.name;
-    if (this.getUserData?.position) this.inputNames[1].value = this.getUserData.position;
-  }
 
   private savePersonalData() {
     this.setUserData({

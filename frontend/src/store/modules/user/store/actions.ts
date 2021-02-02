@@ -28,24 +28,26 @@ const actions: ActionTree<IUserState, IRootState> = {
   logout({ commit }) {
     return new Promise((resolve, reject) => {
       firebase.auth().signOut()
-        .then((resp) => {
-          console.log('logout', resp);
+        .then(() => {
           commit(LOGOUT);
-          resolve(resp);
+          resolve(true);
         })
         .catch((error) => {
           reject(error);
         });
     });
   },
-  register({ commit }, { email, password }) {
+  register({ dispatch, commit }, { email, password }) {
     return new Promise((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(email, password)
-      // eslint-disable-next-line
+        // eslint-disable-next-line
         .then((res: any) => {
-          const user = { token: res.user.refreshToken, user: { email: res.user.email } };
+          const user = { token: res.user.refreshToken, user: { email } };
           commit(REG_SUCCESS, user);
-          resolve(user);
+        })
+        .then(() => dispatch('setUserData', { email }))
+        .then(() => {
+          resolve(email);
         })
         .catch((error) => {
           reject(error);
@@ -62,7 +64,9 @@ const actions: ActionTree<IUserState, IRootState> = {
           return userId;
         })
         .then((userId) => {
-          firebase.database().ref(`users/${userId}`).set({ user: data });
+          firebase.database()
+            .ref(`users/${userId}`)
+            .set({ user: data });
         })
         .then((resp) => {
           commit(SET_USER_DATA, data);
@@ -73,10 +77,14 @@ const actions: ActionTree<IUserState, IRootState> = {
   },
   getUserData({ dispatch, commit }) {
     dispatch('getUid')
-      .then((userId) => firebase.database().ref(`users/${userId}`).once('value'))
-      .then((snapshot) => {
-        const data = (snapshot.val() && snapshot.val().user) || '';
-        commit(SET_USER_DATA, data);
+      .then((uid) => {
+        firebase.database()
+          .ref(`/users/${uid}`)
+          .once('value')
+          .then((snapshot) => {
+            const userdata = (snapshot.val() && snapshot.val().user) || 'Anonymous';
+            commit(SET_USER_DATA, userdata);
+          });
       });
   },
   getUid() {
