@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 export interface IUserState {
   token: string | null;
   user: string;
@@ -12,13 +11,4 @@ export interface IUserData {
   status?: string;
   position?: string;
   uid?: string;
-=======
-export interface IUser {
-  avatar: string;
-  name: string;
-  status: string;
-  position: string;
-  email: string;
-  token: string;
->>>>>>> develop
 }
