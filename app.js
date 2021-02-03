@@ -74,7 +74,7 @@ app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, './dist', 'index.html'))
 })
 */
-app.get('/', checkAuthenticated, (req, res) => {
+app.get('/', (req, res) => {
   res.render('index.ejs')
 })
 
