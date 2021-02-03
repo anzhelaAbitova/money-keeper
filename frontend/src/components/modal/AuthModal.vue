@@ -168,8 +168,7 @@ export default class AuthModal extends Vue {
         },
         body: JSON.stringify(user),
       });
-      response.json();
-      return this.goToCabinet('/cabinet/settings');
+      return response.json();
     } catch (err) {
       return console.log(err);
     }
@@ -185,9 +184,7 @@ export default class AuthModal extends Vue {
         },
         body: JSON.stringify(user),
       });
-      console.log(response);
-      response.json();
-      return this.goToCabinet('/cabinet/settings');
+      return response.json()
     } catch (err) {
       return console.log(err);
     }
