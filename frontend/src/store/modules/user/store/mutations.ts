@@ -1,5 +1,4 @@
 import { MutationTree } from 'vuex';
-<<<<<<< HEAD
 import { IUserState } from '../types';
 import {
   AUTH_SUCCESS,
@@ -35,14 +34,6 @@ const mutations: MutationTree<IUserState> = {
   },
   [SET_USER_DATA](state, payload = '') {
     state.data = { ...state.data, ...payload };
-=======
-import { IUser } from '../types';
-import { SET_USER_AVATAR } from './mutations-types';
-
-const mutations: MutationTree<IUser> = {
-  [SET_USER_AVATAR](state, payload = '') {
-    state.avatar = payload;
->>>>>>> develop
   },
 };
 
