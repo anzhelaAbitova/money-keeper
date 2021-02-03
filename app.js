@@ -75,7 +75,7 @@ app.get('/*', (req, res) => {
 })
 */
 app.get('/', checkAuthenticated, (req, res) => {
-  // res.render('index.ejs', { name: req.user.name, usersEjs: null })
+  res.render('index.ejs')
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
