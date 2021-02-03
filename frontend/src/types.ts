@@ -13,3 +13,18 @@ export interface IAppInput {
   hasBlurCheck?: boolean;
   minLength: number;
 }
+
+export interface IAppCheckbox {
+  label?: string;
+  checked?: boolean;
+  name: string;
+  id?: string;
+  // value?: string | null;
+}
+
+export interface IAppRadiobox {
+  items: string[];
+  name: string;
+  id?: string;
+  current?: number;
+}

@@ -8,24 +8,16 @@
       />
     </div>
     <div class="app-content__body">
-      <transition name="fade" mode="out-in">
-        <div v-if="activeTab === 0" class="app-content__page">
-          <div class="app-content__col">
-            <div class="app-content__title">
-              <h4>Personal info</h4>
-            </div>
-            <ImageCard />
-          </div>
-          <div class="app-content__col">
-            a
-          </div>
-        </div>
-        <div v-if="activeTab === 1" class="app-content__page">
-          company data
-        </div>
-        <div v-if="activeTab === 2" class="app-content__page">
-          app settings
-        </div>
+      <transition name="slide-fade" mode="out-in">
+        <template v-if="activeTab === 0">
+          <SettingsTab1 />
+        </template>
+        <template v-if="activeTab === 1">
+          <SettingsTab2 />
+        </template>
+        <template v-if="activeTab === 2">
+          <SettingsTab3 />
+        </template>
       </transition>
     </div>
   </div>
@@ -33,19 +25,32 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HeadTabs from '@/components/cabinet/HeadTabs.vue';
-import ImageCard from '@/components/cabinet/ImageCard.vue';
+import { namespace } from 'vuex-class';
+import HeadTabs from '../../components/cabinet/HeadTabs.vue';
+import SettingsTab1 from '../../components/cabinet/settings/SettingsTab1.vue';
+import SettingsTab2 from '../../components/cabinet/settings/SettingsTab2.vue';
+import SettingsTab3 from '../../components/cabinet/settings/SettingsTab3.vue';
+
+const Company = namespace('company');
 
 @Component({
   components: {
     HeadTabs,
-    ImageCard,
+    SettingsTab1,
+    SettingsTab2,
+    SettingsTab3,
   },
 })
 
 export default class Settings extends Vue {
+  @Company.Action private getCompanyData!: () => void;
+
   private activeTab = 0;
 
   private tabs = ['Acount settings', 'Company data', 'Aplication settings'];
+
+  created() {
+    this.getCompanyData();
+  }
 }
 </script>

@@ -26,9 +26,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import IconEdit from '@/components/images-svg/icons/IconEdit.vue';
-import IconUser from '@/components/images-svg/icons/IconUser.vue';
-import IconDelete from '@/components/images-svg/icons/IconDelete.vue';
+import IconEdit from '../../components/images-svg/icons/IconEdit.vue';
+import IconUser from '../../components/images-svg/icons/IconUser.vue';
+import IconDelete from '../../components/images-svg/icons/IconDelete.vue';
 import { namespace } from 'vuex-class';
 
 const User = namespace('user');

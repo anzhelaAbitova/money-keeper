@@ -7,47 +7,44 @@
   >
     <div class="app-drawer__inner">
       <div class="app-drawer__head">
-        <div
-          class="app-drawer__icon"
-          @click="changeRoute('/cabinet/home', 'This is start cabinet page')"
-        >
+        <router-link class="app-drawer__icon" tag="div" to="/cabinet">
           <IconBussines />
-        </div>
+        </router-link>
         <div class="app-drawer__name">
           Small business money keeper
         </div>
       </div>
       <div class="app-drawer__nav">
-        <div
+        <router-link
           v-for="(item, i) in getDrawerRoutes"
           class="app-drawer__rout"
-          :class="[
-            ( item.routName === 'Settings' ? 'app-drawer__footer' : null),
-            ($route.path === item.rout ? 'active' : null)
-          ]"
-          @click="changeRoute(item.rout, item.headerTitle)"
+          :class="{ 'app-drawer__footer' : item.routName === 'Settings' }"
+          :to="item.rout"
+          tag="div"
           :key="'drwerrout' + i"
         >
           <div class="app-drawer__rout-icon">
             <component :is="item.icon" />
           </div>
           <div class="app-drawer__rout-name">{{ item.routName }}</div>
-        </div>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import IconBussines from '@/components/images-svg/icons/IconBussines.vue';
-import IconCharts from '@/components/images-svg/icons/IconCharts.vue';
-import IconAlarm from '@/components/images-svg/icons/IconAlarm.vue';
-import IconCamera from '@/components/images-svg/icons/IconCamera.vue';
-import IconTrophy from '@/components/images-svg/icons/IconTrophy.vue';
-import IconWallet from '@/components/images-svg/icons/IconWallet.vue';
-import IconSettings from '@/components/images-svg/icons/IconSettings.vue';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
+import IconBussines from '../images-svg/icons/IconBussines.vue';
+import IconClients from '../images-svg/icons/IconClients.vue';
+import IconCharts from '../images-svg/icons/IconCharts.vue';
+import IconAlarm from '../images-svg/icons/IconAlarm.vue';
+import IconCamera from '../images-svg/icons/IconCamera.vue';
+import IconTrophy from '../images-svg/icons/IconTrophy.vue';
+import IconWallet from '../images-svg/icons/IconWallet.vue';
+import IconSettings from '../images-svg/icons/IconSettings.vue';
+import IconActions from '../images-svg/icons/IconActions.vue';
 import { IDrawerRoutes } from '../../store/modules/global/types';
 
 const Global = namespace('global');
@@ -55,24 +52,38 @@ const Global = namespace('global');
 @Component({
   components: {
     IconBussines,
+    IconClients,
     IconCharts,
     IconAlarm,
     IconCamera,
     IconTrophy,
     IconWallet,
     IconSettings,
+    IconActions,
   },
 })
 
 export default class Drawer extends Vue {
   @Global.Getter private getDrawerRoutes!: IDrawerRoutes;
 
+  @Global.Getter private getRoutTitle!: (rout: string) => void;
+
   private isOpen = false;
 
-  private changeRoute(rout: string, headerTitle: string) {
-    this.$emit('changeHeaderTitle', headerTitle);
-    this.$router.push(rout);
-    this.isOpen = false;
+  created() {
+    this.emitHeadTitle();
+  }
+
+  emitHeadTitle() {
+    this.$emit('changeRout', this.getRoutTitle(this.$route.fullPath));
+  }
+
+  @Watch('$route')
+  private changeRoute(value: string) {
+    if (value) {
+      this.isOpen = false;
+      this.emitHeadTitle();
+    }
   }
 }
 </script>

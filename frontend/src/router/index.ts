@@ -1,12 +1,13 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
+import store from '../store';
 import Home from '../views/pages/Home.vue';
 import CabinetHome from '../views/cabinet/Home.vue';
 import Charts from '../views/cabinet/Charts.vue';
-import History from '../views/cabinet/History.vue';
-import Goals from '../views/cabinet/Goals.vue';
+import Invoices from '../views/cabinet/Invoices.vue';
+import Services from '../views/cabinet/Services.vue';
 import Balance from '../views/cabinet/Balance.vue';
-import New from '../views/cabinet/New.vue';
+import Clients from '../views/cabinet/Clients.vue';
 import Settings from '../views/cabinet/Settings.vue';
 
 Vue.use(VueRouter);
@@ -16,6 +17,9 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'Home',
     component: Home,
+    meta: {
+      guest: true,
+    },
   },
   {
     path: '/about',
@@ -24,14 +28,17 @@ const routes: Array<RouteConfig> = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/About.vue'),
+    meta: {
+      guest: true,
+    },
   },
   {
-    path: '/cabinet/home',
+    path: '/cabinet',
     name: 'CabinetHome',
     component: CabinetHome,
     meta: {
       layout: 'cabinet-layout',
-      // requiresAuth: true
+      requiresAuth: true,
     },
   },
   {
@@ -40,25 +47,25 @@ const routes: Array<RouteConfig> = [
     component: Charts,
     meta: {
       layout: 'cabinet-layout',
-      // requiresAuth: true
+      requiresAuth: true,
     },
   },
   {
-    path: '/cabinet/history',
-    name: 'History',
-    component: History,
+    path: '/cabinet/invoices',
+    name: 'Invoices',
+    component: Invoices,
     meta: {
       layout: 'cabinet-layout',
-      // requiresAuth: true
+      requiresAuth: true,
     },
   },
   {
-    path: '/cabinet/goals',
-    name: 'Goals',
-    component: Goals,
+    path: '/cabinet/services',
+    name: 'Services',
+    component: Services,
     meta: {
       layout: 'cabinet-layout',
-      // requiresAuth: true
+      requiresAuth: true,
     },
   },
   {
@@ -67,16 +74,16 @@ const routes: Array<RouteConfig> = [
     component: Balance,
     meta: {
       layout: 'cabinet-layout',
-      // requiresAuth: true
+      requiresAuth: true,
     },
   },
   {
-    path: '/cabinet/new',
-    name: 'New',
-    component: New,
+    path: '/cabinet/clients',
+    name: 'Clients',
+    component: Clients,
     meta: {
       layout: 'cabinet-layout',
-      // requiresAuth: true
+      requiresAuth: true,
     },
   },
   {
@@ -85,7 +92,7 @@ const routes: Array<RouteConfig> = [
     component: Settings,
     meta: {
       layout: 'cabinet-layout',
-      // requiresAuth: true
+      requiresAuth: true,
     },
   },
 ];
@@ -94,6 +101,18 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (store.getters['user/isLoggedIn']) {
+      next();
+      return;
+    }
+    next('/');
+  } else {
+    next();
+  }
 });
 
 export default router;

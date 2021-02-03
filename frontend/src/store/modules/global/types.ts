@@ -1,5 +1,5 @@
 export interface IDrawerRoutes {
-  drawerRoutes: IDrawerRoutesItem[],
+  drawerRoutes: Array<IDrawerRoutesItem>,
 }
 
 export interface IDrawerRoutesItem {

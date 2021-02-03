@@ -9,7 +9,10 @@
         </nav>
         <div class="app-page__auth">
           <div class="app-page__auth-reg">
-            <a href="javascript:void(0);" @click="setModalState(modalOpenParams)">
+            <a
+              href="javascript:void(0);"
+              @click="!isLoggedIn ? setModalState(modalOpenParams) : $router.push('/cabinet')"
+            >
               <UserImage />
             </a>
           </div>
@@ -37,6 +40,7 @@ import { namespace } from 'vuex-class';
 import { IModalState } from '../store/modules/modal/types';
 
 const Modal = namespace('modal');
+const User = namespace('user');
 
 @Component({
   components: {
@@ -45,6 +49,8 @@ const Modal = namespace('modal');
 })
 export default class PageLayout extends Vue {
   @Modal.Action private setModalState!: (ev: boolean) => void;
+
+  @User.Getter private isLoggedIn?: boolean;
 
   private modalOpenParams: IModalState = {
     modalComponentName: 'AuthModal',

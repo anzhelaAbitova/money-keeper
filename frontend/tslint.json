@@ -2,8 +2,10 @@
     // "extends": "tslint:recommended",
     "rules": {
         "max-line-length": {
-            "options": [120]
+            "options": [160]
         },
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
         // "new-parens": true,
         // "no-arg": true,
         // "no-bitwise": true,
@@ -17,7 +19,7 @@
     },
     "jsRules": {
         "max-line-length": {
-            "options": [120]
+            "options": [160]
         }
     }
 }

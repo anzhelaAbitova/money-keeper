@@ -1,0 +1,52 @@
+.new-modal {
+    display: flex;
+    align-items: stretch;
+    
+    &__content {
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+        padding: 10px 20px;
+    }
+
+    &__body {
+        min-height: 400px;
+        overflow-y: auto;
+    }
+
+    &__form {
+        height: 100%;
+    }
+
+    &__title {
+        padding: 10px 0;
+        font-size: 19px;
+        font-weight: 700;
+        text-align: center;
+
+        h4 {
+            margin: 0;
+        }
+    }
+
+    &__row {
+        @extend %dfsb;
+        width: 100%;
+        padding: 20px 0;
+
+        .btn {
+            max-width: 150px;
+            margin: 0 auto;
+        }
+    }
+
+    &__label {
+        font-size: 19px;
+        font-weight: 600;
+    }
+
+    &__input-number {
+        width: 80px;
+        padding: 10px 5px;
+    }
+}

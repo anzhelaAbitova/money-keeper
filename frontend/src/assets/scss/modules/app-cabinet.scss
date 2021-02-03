@@ -66,6 +66,7 @@
 
         &.is-open {
             display: block;
+            z-index: 40;
         }
 
         &:after {

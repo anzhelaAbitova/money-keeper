@@ -5,12 +5,21 @@
 @import "normalize-scss";
 @import "common/layout";
 
-@import "modules/btn";
-@import "modules/app-input";
+@import "elements/btn";
+@import "elements/spinner";
+@import "elements/head-tabs";
+@import "elements/app-checkbox";
+@import "elements/app-radiobox";
+@import "elements/app-input";
+
 @import "modules/app-page";
 @import "modules/auth-modal";
+@import "modules/confirm-modal";
+@import "modules/new-modal";
 @import "modules/app-cabinet";
 @import "modules/app-content";
 @import "modules/app-drawer";
-@import "modules/head-tabs";
+@import "modules/app-content";
+@import "modules/app-drawer";
 @import "modules/image-card";
+@import "modules/app-pdf.scss";

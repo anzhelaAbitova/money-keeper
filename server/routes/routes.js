@@ -3,10 +3,17 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const mongoose = require('mongoose');
+<<<<<<< HEAD
+const User = require('../models/models').User;
+const Interaction = require('../models/models').Interaction;
+const Contractor = require('../models/models').Contractor;
+const interactionCrud = require('./../crudRoutes/interactionCrud');
+=======
 const User = require('./../models').User;
 const Interaction = require('./../models').Interaction;
 const Contractor = require('./../models').Contractor;
 //const interactionCrud = require('./../crudRoutes/interactionCrud');
+>>>>>>> develop
   
 const host = '127.0.0.1'
 const port = process.env.PORT || 3000;
