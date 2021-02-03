@@ -2,9 +2,10 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "devStart": "nodemon index.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [
     "js"
@@ -14,6 +15,8 @@
   "dependencies": {
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
+    "chart.js": "^2.9.4",
+    "chartjs-node-canvas": "^3.1.0",
     "connect-mongo": "^3.2.0",
     "cors": "^2.8.5",
     "ejs": "^3.1.5",
@@ -30,5 +33,9 @@
   "devDependencies": {
     "dotenv": "^8.2.0",
     "nodemon": "^2.0.7"
+  },
+  "engines": {
+    "node": "10.x",
+    "npm": "6.14.x"
   }
 }
