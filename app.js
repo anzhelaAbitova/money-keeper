@@ -18,6 +18,7 @@ const connect = require('./mongoConnection');
 const User = require('./models').User;
 const Interaction = require('./models').Interaction;
 const Contractor = require('./models').Contractor;
+const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 //const interactionCrud = require('./crudRoutes/interactionCrud');
 const router = require('./routes/routes')
 const host = '127.0.0.1'
@@ -86,7 +87,7 @@ app.get('/register', checkNotAuthenticated, async (req, res) => {
 })
 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-  successRedirect: '/cabinet/home',
+  successRedirect: '/post',
   failureRedirect: '/login',
   failureFlash: true
 }
@@ -119,13 +120,7 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
 
 app.get('/user', checkAuthenticated, (req, res) => {
   console.log(req.session.passport.user)
-  User.findOne({ "_id": req.session.passport.user }, (err, docs) => {
-    if (err) {
-      console.log(err);
-      return res.sendStatus(500);
-    }
-    return res.send(docs);
-  })
+  findUser(req.session.passport.user, req, res);
 })
 
 app.get('/users', (req, res) => {
@@ -138,15 +133,14 @@ app.get('/users', (req, res) => {
   })
 })
 
-app.get('/post', checkAuthenticated, (req, res) => {
-  res.render('post.ejs');
+app.get('/post', checkAuthenticated, async (req, res) => {
+  res.render('post.ejs', { username: req.session.passport.user, text: 'posts'  });
 })
 
 app.post('/post', checkAuthenticated, async (req, res) => {
   try {
     const interaction = new Interaction ({
       user: req.session.passport.user || 'test',
-      number: req.body.number || 1,
       work: req.body.work,
       contractor: req.body.contractor,
       cost: req.body.cost,
@@ -171,9 +165,6 @@ app.get('./contractor', checkAuthenticated, (req, res) => {
 })
 */
 
-app.get('/history', checkAuthenticated, async (req, res) => {
-  res.render('history.ejs')
-})
 app.post('/contractor', checkAuthenticated, async (req, res) => {
   try {
     const contractor = new Contractor ({
@@ -192,30 +183,197 @@ app.post('/contractor', checkAuthenticated, async (req, res) => {
     return res.sendStatus(500);  }
 })
 
-app.get('/posts', checkAuthenticated, async (req, res) => {
+app.get('/history', checkAuthenticated, async (req, res) => {
   try {
     console.log(req.session.passport.user)
     const data = await Interaction.find({ "user": req.session.passport.user }).populate().exec();
     console.log(data)
-    return res.send(data);
+    return res.render('history.ejs', { username: 'Jane Doe', interaction: data, text: 'history'  });
   } catch (err) {
     console.log(err);
     return res.sendStatus(500);
   }
 })
 
-app.get('/logout', (req, res) => {
-  req.logOut()
-  res.redirect('/login')
+app.get('/balance', checkAuthenticated, async (req, res) => {
+  try {
+    console.log(req.session.passport.user)
+    const data = await Interaction.find({ "user": req.session.passport.user }).populate().exec(); 
+    const income = [];
+    const expense = [];
+    data.forEach(elem => {
+      if (elem.income) {
+        income.push(elem);
+      } else {
+        expense.push(elem);
+      }
+    }) 
+    const width = 500;
+    const height = 500;
+    const chartCallback = (ChartJS) => {
+        ChartJS.defaults.global.elements.rectangle.borderWidth = 2;
+    };
+    const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height, chartCallback });
+    (async () => {
+      const configuration = {
+        type: 'line',
+        data: {
+            labels: ['Income', 'Expense'],
+            datasets: [{ 
+              data: income,
+              label: "Income",
+              borderColor: "#F0009C",
+              fill: true
+            },
+            {
+              data: expense,
+              label: "Expense",
+              borderColor: "#0BDBE7",
+              fill: true
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        callback: (value) => '$' + value
+                    }
+                }]
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+              display:true,
+              text:"Balance of your money interactions",
+              fontStyle: "normal",
+              fontColor: "#0f0f0f"
+            },
+        }
+    };
+    const image = await chartJSNodeCanvas.renderToBuffer(configuration);
+    const dataUrl = await chartJSNodeCanvas.renderToDataURL(configuration);
+    const stream = chartJSNodeCanvas.renderToStream(configuration);
+    return res.render('balance.ejs', { username: 'Jane Doe', interaction: data, imageC: dataUrl, text: 'balance'  });
+})();
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
 })
+
+app.get('/chart', checkAuthenticated, async (req, res) => {
+  try {
+    console.log(req.session.passport.user)
+    const data = await Interaction.find({ "user": req.session.passport.user }).populate().exec(); 
+    const quiz = [];
+    const blogs = [];
+    const ecommerce = [];
+    const corporate = [];
+    const promo = [];
+    const width = 500;
+    const height = 500;
+    const chartCallback = (ChartJS) => {
+        ChartJS.defaults.global.elements.rectangle.borderWidth = 2;
+    };
+    const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height, chartCallback });
+    (async () => {
+      const configuration = {
+        type: 'bar',
+        data: {
+            labels: ['Quiz', 'E-commerce', 'Blogs', 'Corporate', 'Promo'],
+            datasets: [
+              { 
+              data: quiz,
+              label: "Quiz",
+              backgroundColor: "#FF7785",
+              fill: true
+            },
+            {
+              data: ecommerce,
+              label: "E-commerce",
+              backgroundColor: "#FFA841",
+              fill: true
+            },
+            { 
+              data: blogs,
+              label: "Blogs",
+              backgroundColor: "#1EE491",
+              fill: true
+            },
+            { 
+              data: corporate,
+              label: "Corporate",
+              backgroundColor: "#F5CECF",
+              fill: true
+            },
+            {
+              data: promo,
+              label: "Promo",
+              backgroundColor: "#0BDBE7",
+              fill: true
+            }
+          ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        callback: (value) => '$' + value
+                    }
+                }]
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+              display:true,
+              text:"Incomes by type",
+              fontStyle: "normal",
+              fontColor: "#0f0f0f"
+            },
+        }
+    };
+    const image = await chartJSNodeCanvas.renderToBuffer(configuration);
+    const dataUrl = await chartJSNodeCanvas.renderToDataURL(configuration);
+    const stream = chartJSNodeCanvas.renderToStream(configuration);
+    return res.render('chart.ejs', { username: 'Jane Doe', imageC: dataUrl, text: 'chart'  });
+})();
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
+})
+
+app.get('/goals', checkAuthenticated, async (req, res) => {
+  res.render('goals.ejs', { username: 'Jane Doe', text: 'goals'  });
+})
+
+app.get('/settings', checkAuthenticated, async (req, res) => {
+  res.render('settings.ejs', { username: 'Jane Doe', text: 'settings'  });
+})
+
+app.get('/logout', (req, res) => {
+  req.logOut();
+  res.redirect('/login');
+})
+
+function findUser(id, req, res) {
+  User.findOne({ "_id": id }, (err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500);
+    }
+    return res.send(docs);
+  })
+}
 
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next()
   }
   console.log(req.isAuthenticated())
-  res.send({ param: 111 });
-  // res.redirect('/login')
+  res.redirect('/login')
 }
 
 function checkNotAuthenticated(req, res, next) {

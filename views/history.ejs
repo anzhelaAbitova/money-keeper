@@ -1,7 +1,29 @@
 <%- include("head.ejs") %>
 <body>
     <%- include("header.ejs") %>
-    
+    <table class="history__interaction">
+        <thead>
+            <td>Number</td>
+            <td>Work</td>
+            <td>Contractor</td>
+            <td>Cost</td>
+            <td>Income?</td>
+            <td>Regular</td>
+        </thead>
+        <tbody>
+            <% for (var n=0; n<(interaction.length); n++) {%>
+                <tr>
+                    <% if (JSON.stringify(interaction[n * 3]) === undefined) break;%>
+                    <td><%- JSON.stringify(n + 1)%></td>
+                    <td><%- JSON.stringify(interaction[n].work).replace(/"/g, '').replace(/\b\w/g, l => l.toUpperCase())%></td>
+                    <td><%- JSON.stringify(interaction[n].contractor.replace(/"/g, '').replace(/\b\w/g, l => l.toUpperCase()))%></td>
+                    <td><%- JSON.stringify(interaction[n].cost)%></td>
+                    <td><%- (JSON.stringify(interaction[n].income) === 'true') ? 'yes' : 'no' %></td>
+                    <td><%- (JSON.stringify(interaction[n].regular) === 'true') ? 'yes' : 'no' %></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
     <%- include("scripts.ejs") %>
 </body>
 </html>

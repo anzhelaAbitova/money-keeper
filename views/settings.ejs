@@ -1,0 +1,46 @@
+<%- include("head.ejs") %>
+<body>
+    <%- include("header.ejs") %>
+    <div class="app-content">
+        <div class="app-content__head">
+          <HeadTabs
+            :tabs="tabs"
+            :activeTab="activeTab"
+            @changeActive="activeTab = $event"
+          />
+        </div>
+        <div class="app-content__body">
+          <transition name="fade" mode="out-in">
+            <div v-if="activeTab === 0" class="app-content__page">
+              <div class="app-content__col">
+                <div class="app-content__title">
+                  <h4>Avatar</h4>
+                </div>
+                <ImageCard />
+              </div>
+              <div class="app-content__col">
+                <div class="app-content__title">
+                  <h4>Personal info</h4>
+                </div>
+                <div class="app-content__form">
+                  <div class="app-content__form-row">
+                    <AppInput :params="inputNameData" @changeInput="inputNameData.value = $event" />
+                  </div>
+                  <div class="app-content__form-row">
+                    <button class="btn btn-primary">Save</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-if="activeTab === 1" class="app-content__page">
+              company data
+            </div>
+            <div v-if="activeTab === 2" class="app-content__page">
+              app settings
+            </div>
+          </transition>
+        </div>
+      </div>
+    <%- include("scripts.ejs") %>
+</body>
+</html>

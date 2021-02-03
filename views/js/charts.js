@@ -1,7 +1,7 @@
 class Charts {
     init = async () => {
         const chart = require('chart');
-        const api = require('./api');
+        //const api = require('./api');
         this.barChart(chart);
         this.roundChart(chart);
         this.lineChart(chart);
@@ -20,5 +20,4 @@ class Charts {
     }
 }
 
-const charts = new Charts();
-charts.init();
+export default Charts;

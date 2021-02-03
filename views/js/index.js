@@ -1,6 +1,26 @@
-const appDrawer = document.querySelector('.app-drawer');
+'use strict';
 
+const appDrawer = document.querySelector('.app-drawer');
 const makePost = document.querySelector('#makePost');
+const userHeader = document.querySelector('.app-cabinet__header-user');
+const userDropdown = document.querySelector('.app-cabinet__user-dropdown');
+import Charts from './charts.js';
+
+const makeElem = (type, className = '', text = '') => {
+    let el = document.createElement(type);
+    if (className) {
+        if (typeof className === 'string') {
+            el.classList.add(className);
+        } else {
+            className.forEach(item => el.classList.add(item));
+        }
+    };
+    let textNode = document.createTextNode(text);
+    el.appendChild(textNode);
+    return el;
+}
+
+/*
 makePost.addEventListener('submit', function async(e) {
     e.preventDefault();
     try {
@@ -26,10 +46,14 @@ makePost.addEventListener('submit', function async(e) {
     console.log(err);
 }
 })
-
+*/
 appDrawer.addEventListener('mouseenter', function () {
     appDrawer.classList.toggle('is-open');
     appDrawer.addEventListener('mouseleave', function () {
         appDrawer.classList.toggle('is-open');
     })
+})
+
+userHeader.addEventListener('click', function() {
+    userDropdown.classList.toggle('is-open');
 })

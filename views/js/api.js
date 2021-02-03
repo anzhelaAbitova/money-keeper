@@ -4,7 +4,7 @@ class Api {
         //let reg = await this.posts();
         //console.log(log)
         //console.log(reg)
-    }
+    };
     login = async () => {
         try {
             let user = {
@@ -24,7 +24,7 @@ class Api {
         } catch (err) {
             return console.log(err)
         }
-    }
+    };
     register = async () => {
         try {
             let user = {
@@ -45,7 +45,7 @@ class Api {
         } catch (err) {
             console.log(err)
         }
-    }
+    };
     user = async () => {
         try {
             let response = await fetch('https://money-keeper21.herokuapp.com/user');
@@ -54,11 +54,10 @@ class Api {
         } catch (err) {
             console.log(err);
         }
-    }
+    };
     post = async () => {
         try {
             let post = {
-                number: 4,
                 work: 'web-design',
                 contractor: 'ann',
                 cost: 344,
@@ -78,7 +77,7 @@ class Api {
         } catch (err) {
             console.log(err);
         }
-    }
+    };
     posts = async () => {
         try {
             let response = await fetch('https://money-keeper21.herokuapp.com/posts');
@@ -90,6 +89,4 @@ class Api {
     }
 }
 
-const api = new Api();
-api.init();
-module.exports = api;
+export default Api;

@@ -31,11 +31,6 @@ const interactionScheme = new Schema({
       type: String,
       required: true,
     },
-    number: {
-      type: Number,
-      default: 1,
-      min: 1,
-    },
     work: {
       type: String,
       required: true,
