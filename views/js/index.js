@@ -1,10 +1,19 @@
 'use strict';
 
-const appDrawer = document.querySelector('.app-drawer');
-const makePost = document.querySelector('#makePost');
-const userHeader = document.querySelector('.app-cabinet__header-user');
-const userDropdown = document.querySelector('.app-cabinet__user-dropdown');
-import Charts from './charts.js';
+const login = document.querySelector('.app-page__auth');
+
+login.addEventListener('click', function() {
+    const modal = document.querySelector('.auth-modal');
+    const btnLogin = getDescendant('button', 'btn-primary');
+    console.log(btnLogin)
+})
+
+
+
+function getDescendant(el, cls) {
+    while ((el = el.lastElementChild) && !el.classList.contains(cls));
+    return el;
+}
 
 const makeElem = (type, className = '', text = '') => {
     let el = document.createElement(type);
@@ -47,13 +56,4 @@ makePost.addEventListener('submit', function async(e) {
 }
 })
 */
-appDrawer.addEventListener('mouseenter', function () {
-    appDrawer.classList.toggle('is-open');
-    appDrawer.addEventListener('mouseleave', function () {
-        appDrawer.classList.toggle('is-open');
-    })
-})
 
-userHeader.addEventListener('click', function() {
-    userDropdown.classList.toggle('is-open');
-})

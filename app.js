@@ -88,7 +88,7 @@ app.get('/register', checkNotAuthenticated, async (req, res) => {
 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   successRedirect: '/post',
-  failureRedirect: '/login',
+  failureRedirect: '/',
   failureFlash: true
 }
 ))
@@ -355,7 +355,7 @@ app.get('/settings', checkAuthenticated, async (req, res) => {
 
 app.get('/logout', (req, res) => {
   req.logOut();
-  res.redirect('/login');
+  //res.redirect('/login');
 })
 
 function findUser(id, req, res) {
@@ -373,7 +373,7 @@ function checkAuthenticated(req, res, next) {
     return next()
   }
   console.log(req.isAuthenticated())
-  res.redirect('/login')
+  //res.redirect('/')
 }
 
 function checkNotAuthenticated(req, res, next) {
