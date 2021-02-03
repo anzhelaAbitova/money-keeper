@@ -5,15 +5,18 @@ const userScheme = new Schema({
     username: {
       type: String,
       required: true,
+      unique: true,
       index: { 
-        unique: true 
+        unique: true,
+        dropDups: true 
       }
     },
     email: {
       type: String,
       required: true,
       index: { 
-        unique: true 
+        unique: true, 
+        dropDups: true 
       }
     },
     password: {
@@ -25,27 +28,23 @@ const userScheme = new Schema({
   
 const interactionScheme = new Schema({
     user: {
-       type: mongoose.Schema.Types.ObjectId,
-       ref: 'User',
-       required: true,
-    },
-    number: {
-      type: Number,
-      default: 1,
-      min: 1,
+      type: String,
+      required: true,
     },
     work: {
       type: String,
       required: true,
     },
     contractor: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Contractor',
+      type: String,
       required: true,
    },
     cost: {
       type: Number,
       required: true,
+    },
+    income: {
+      type: Boolean,
     },
     regular: {
       type: Boolean,

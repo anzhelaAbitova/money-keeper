@@ -1,0 +1,91 @@
+<div class="app-cabinet">
+<div class="app-cabinet__header">
+      <div class="app-cabinet__header-greeting">Hello, <%=username %></div>
+      <div class="app-cabinet__header-description">This is your <%=text %></div>
+      <div class="app-cabinet__header-style">
+        <div class="app-cabinet__header-style_icon">
+          <a href="javascript:void(0);">
+            <span class="iconify" data-inline="false" data-icon="bx:bx-moon" style="color: #0f0f0f; font-size: 48px;"></span>
+          </a>
+        </div>
+      </div>
+      <div class="app-cabinet__header-user">
+        <a href="javascript:void(0);" @click="userDropDownOpen = !userDropDownOpen">
+          <span class="iconify" data-inline="false" data-icon="mdi-light:account" style="color: #0f0f0f; font-size: 81px;"></span>
+        </a>
+        <transition name="fade">
+          <div class="app-cabinet__user-dropdown" :class="{ 'is-open' : userDropDownOpen }">
+            Press this to logout
+            <div class="app-cabinet__user-dropdown_row">
+              <a href="/logout" class="btn btn-primary">Log out</a>
+            </div>
+          </div>
+        </transition>
+      </div>
+    </div>
+<div>
+  <div class="app-drawer">
+    <div class="app-drawer__inner">
+      <a href="/" class="app-drawer__head">
+        <div class="app-drawer__icon" tag="div" to="/cabinet">
+          <span class="iconify" data-inline="false" data-icon="ic:outline-business-center" style="font-size: 53px;color: linear-gradient(225deg, #E6F3F5 0%, #B2EBF3 100%);"></span>
+        </div>
+        <div class="app-drawer__name">
+          Small business money keeper
+        </div>
+      </a>
+      <div class="app-drawer__nav">
+        <a class="app-drawer__rout" href="/chart">
+          <div class="app-drawer__rout-icon">
+            <span class="iconify" data-inline="false" data-icon="mdi-light:chart-bar" style="color: #e6f3f5; font-size: 24px;"></span>
+          </div>
+          <div class="app-drawer__rout-name">
+            Charts
+          </div>
+        </a>
+        <a class="app-drawer__rout" href="/history">
+          <div class="app-drawer__rout-icon">
+            <span class="iconify" data-inline="false" data-icon="mdi-light:alarm" style="color: #e6f3f5; font-size: 24px;"></span>
+          </div>
+          <div class="app-drawer__rout-name">
+            History
+          </div>
+        </a>
+        <a class="app-drawer__rout" href="/goals">
+          <div class="app-drawer__rout-icon">
+            <span class="iconify" data-inline="false" data-icon="mdi-light:trophy" style="color: #e6f3f5; font-size: 24px;"></span>
+          </div>
+          <div class="app-drawer__rout-name">
+            Goals
+          </div>
+        </a>
+        <a class="app-drawer__rout" href="/balance">
+          <div class="app-drawer__rout-icon">
+            <span class="iconify" data-inline="false" data-icon="mdi-light:wallet" style="color: #e6f3f5; font-size: 24px;"></span>
+          </div>
+          <div class="app-drawer__rout-name">
+            Balance
+          </div>
+        </a>
+        <a class="app-drawer__rout" href="/post">
+          <div class="app-drawer__rout-icon">
+            <span class="iconify" data-inline="false" data-icon="mdi-light:camera" style="color: #e6f3f5; font-size: 24px;"></span>
+          </div>
+          <div class="app-drawer__rout-name">
+            Add new
+          </div>
+        </a>
+        <a class="app-drawer__rout" href="/settings">
+          <div class="app-drawer__rout-icon">
+            <span class="iconify" data-inline="false" data-icon="mdi-light:cog" style="color: #e6f3f5; font-size: 24px;"></span>
+          </div>
+          <div class="app-drawer__rout-name">
+            Settings
+          </div>
+        </a>
+      </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <main class="app-cabinet__main">
