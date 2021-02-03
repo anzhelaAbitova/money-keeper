@@ -1,33 +1,40 @@
 # rsclone
 
-## Инструкции для запуска сервера
-
-### Для того, чтобы запустить сервер в режиме разработчика
-
-```
-npm run dev
-```
-
-### Для того, чтобы запустить сервер
+## Project express server setup
 ```
 npm run start
 ```
 
-## Инструкции для запуска приложения Vue 
-### Для того, чтобы запустить приложение Vue в режиме разработчика
+### Compiles and hot-reloads for development
 ```
 npm run dev
 ```
 
-### Для того, чтобы собрать билд
+
+## Project Vue setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
 ```
 npm run build
 ```
 
-### Для того, чтобы запустить тесты
-npm run test::unit
+### Run your unit tests
+```
+npm run test:unit
+```
 
-### Для того, чтобы запустить линтер
+### Lints and fixes files
 ```
 npm run lint
 ```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
