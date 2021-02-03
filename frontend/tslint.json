@@ -4,7 +4,7 @@
         "max-line-length": {
             "options": [160]
         },
-        "linebreak-style": ["error", "windows"],
+        "linebreak-style": ["error", "unix"],
         // "new-parens": true,
         // "no-arg": true,
         // "no-bitwise": true,
