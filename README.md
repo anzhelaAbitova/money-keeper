@@ -2,6 +2,7 @@
 
 ## Project express server setup
 ```
+cd server
 npm run start
 ```
 
@@ -13,12 +14,13 @@ npm run dev
 
 ## Project Vue setup
 ```
+cd frontend
 npm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run dev
 ```
 
 ### Compiles and minifies for production
