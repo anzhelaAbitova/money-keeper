@@ -50,7 +50,9 @@ import { IUserData } from '../store/modules/user/types';
 
 const Modal = namespace('modal');
 const User = namespace('user');
-const Company = namespace('Company');
+const Services = namespace('services');
+const Company = namespace('company');
+const Clients = namespace('clients');
 
 @Component({
   components: {
@@ -69,9 +71,17 @@ export default class CabinetLayout extends Vue {
 
   @User.Action private getUserData!: () => void;
 
+  @Clients.Action private getClientsData!: () => void;
+
   @User.Getter private userData?: IUserData;
 
   @Company.Action private clearCompanyData!: () => void;
+
+  @Services.Action private clearServicesData!: () => void;
+
+  @Services.Action private getServicesData!: () => void;
+
+  @Clients.Action private clearClientsData!: () => void;
 
   private userDropDownOpen = false;
 
@@ -90,6 +100,8 @@ export default class CabinetLayout extends Vue {
 
   created() {
     this.getUserData();
+    this.getClientsData();
+    this.getServicesData();
   }
 
   confirmCb(ev: boolean): void {
@@ -102,6 +114,8 @@ export default class CabinetLayout extends Vue {
 
   beforedestroy() {
     this.clearCompanyData();
+    this.clearServicesData();
+    this.clearClientsData();
   }
 }
 </script>

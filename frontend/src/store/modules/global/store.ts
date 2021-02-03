@@ -20,16 +20,16 @@ const state = {
       headerTitle: 'This is your history',
     },
     {
-      rout: '/cabinet/goals',
-      routName: 'Goals',
-      icon: 'IconTrophy',
-      headerTitle: 'This is your goals',
-    },
-    {
       rout: '/cabinet/balance',
       routName: 'Balance',
       icon: 'IconWallet',
       headerTitle: 'This is your expenses and incomes',
+    },
+    {
+      rout: '/cabinet/services',
+      routName: 'Services',
+      icon: 'IconTrophy',
+      headerTitle: 'This is your services',
     },
     {
       rout: '/cabinet/clients',

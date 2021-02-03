@@ -1,0 +1,35 @@
+.new-modal {
+    display: flex;
+    align-items: stretch;
+
+    &__content {
+        width: 100%;
+        height: 100%;
+        padding: 10px 20px;
+    }
+
+    &__body {
+        overflow-y: auto;
+    }
+
+    &__title {
+        padding: 10px 0;
+        font-size: 19px;
+        font-weight: 700;
+        text-align: center;
+
+        h4 {
+            margin: 0;
+        }
+    }
+
+    &__row {
+        width: 100%;
+        padding: 20px 0;
+
+        .btn {
+            max-width: 150px;
+            margin: 0 auto;
+        }
+    }
+}

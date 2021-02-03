@@ -36,6 +36,7 @@ import { namespace } from 'vuex-class';
 import ImageCard from './ImageCard.vue';
 import AppInput from '../../elements/AppInput.vue';
 import { IAppInput } from '../../../types';
+import { IUserData } from '../../../store/modules/user/types';
 
 const User = namespace('user');
 
@@ -47,8 +48,7 @@ const User = namespace('user');
 })
 
 export default class Settings extends Vue {
-  // eslint-disable-next-line
-  @User.Getter private userData!: any;
+  @User.Getter private userData!: IUserData;
 
   @User.Action private setUserData!: (data: object) => void;
 

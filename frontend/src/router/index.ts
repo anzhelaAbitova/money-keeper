@@ -5,7 +5,7 @@ import Home from '../views/pages/Home.vue';
 import CabinetHome from '../views/cabinet/Home.vue';
 import Charts from '../views/cabinet/Charts.vue';
 import History from '../views/cabinet/History.vue';
-import Goals from '../views/cabinet/Goals.vue';
+import Services from '../views/cabinet/Services.vue';
 import Balance from '../views/cabinet/Balance.vue';
 import Clients from '../views/cabinet/Clients.vue';
 import Settings from '../views/cabinet/Settings.vue';
@@ -60,9 +60,9 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
-    path: '/cabinet/goals',
-    name: 'Goals',
-    component: Goals,
+    path: '/cabinet/services',
+    name: 'Services',
+    component: Services,
     meta: {
       layout: 'cabinet-layout',
       requiresAuth: true,

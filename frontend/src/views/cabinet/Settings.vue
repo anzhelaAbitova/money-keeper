@@ -31,8 +31,6 @@ import SettingsTab1 from '../../components/cabinet/settings/SettingsTab1.vue';
 import SettingsTab2 from '../../components/cabinet/settings/SettingsTab2.vue';
 import SettingsTab3 from '../../components/cabinet/settings/SettingsTab3.vue';
 
-const User = namespace('user');
-
 const Company = namespace('company');
 
 @Component({
@@ -45,11 +43,6 @@ const Company = namespace('company');
 })
 
 export default class Settings extends Vue {
-  // eslint-disable-next-line
-  @User.Getter private userData!: any;
-
-  @User.Action private setUserData!: (data: object) => void;
-
   @Company.Action private getCompanyData!: () => void;
 
   private activeTab = 0;
@@ -59,13 +52,5 @@ export default class Settings extends Vue {
   created() {
     this.getCompanyData();
   }
-
-  // mounted() {
-  //   const timerId = setTimeout(() => {
-  //     this.inputNames[0].value = this.userData?.name;
-  //     this.inputNames[1].value = this.userData?.position;
-  //     clearTimeout(timerId);
-  //   }, 500);
-  // }
 }
 </script>

@@ -5,6 +5,8 @@ import global from './modules/global/store';
 import user from './modules/user/store';
 import modal from './modules/modal/store';
 import company from './modules/company/store';
+import clients from './modules/clients/store';
+import services from './modules/services/store';
 
 Vue.use(Vuex);
 
@@ -17,6 +19,8 @@ const store: StoreOptions<IRootState> = {
     user,
     modal,
     company,
+    clients,
+    services,
   },
   strict: true,
 };

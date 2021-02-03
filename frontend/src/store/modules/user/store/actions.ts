@@ -8,7 +8,6 @@ import {
   REG_SUCCESS,
   SET_USER_DATA,
 } from './mutations-types';
-import { CLEAR_STATE } from '../../company/store/mutations-types';
 
 const actions: ActionTree<IUserState, IRootState> = {
   login({ commit }, { email, password }) {
@@ -26,7 +25,7 @@ const actions: ActionTree<IUserState, IRootState> = {
         });
     });
   },
-  logout({ dispatch, commit }) {
+  logout({ commit }) {
     return new Promise((resolve, reject) => {
       firebase.auth().signOut()
         .then(() => {

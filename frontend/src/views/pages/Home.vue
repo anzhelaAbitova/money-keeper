@@ -58,10 +58,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import BannerImage from '@/components/images-svg/BannerImage.vue';
-import FeaturesCard from '@/components/page/FeaturesCard.vue';
 import { namespace } from 'vuex-class';
-import { IFeaturesCard } from '@/types';
+import BannerImage from '../../components/images-svg/BannerImage.vue';
+import FeaturesCard from '../../components/page/FeaturesCard.vue';
+import { IFeaturesCard } from '../../types';
 import { IModalState } from '../../store/modules/modal/types';
 
 const Modal = namespace('modal');
