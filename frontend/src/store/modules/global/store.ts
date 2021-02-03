@@ -26,6 +26,12 @@ const state = {
       headerTitle: 'This is your expenses and incomes',
     },
     {
+      rout: '/cabinet/invoices',
+      routName: 'Invoices',
+      icon: 'IconActions',
+      headerTitle: 'This is your invoices',
+    },
+    {
       rout: '/cabinet/services',
       routName: 'Services',
       icon: 'IconTrophy',

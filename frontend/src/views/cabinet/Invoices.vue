@@ -1,13 +1,10 @@
 <template>
   <div class="app-content">
     <div class="app-content__body mw-1200">
-      <div class="app-content__title">
-        <h2>Info about your beneficiaries</h2>
-      </div>
-      <template v-if="clients">
+      <template v-if="invoices">
         <vue-good-table
           :columns="columns"
-          :rows="clients"
+          :rows="invoices"
           :search-options="{
             enabled: true
           }"
@@ -16,7 +13,10 @@
       </template>
     </div>
     <div class="app-content__button">
-      <button class="btn btn-primary" @click="setModalState(modalAuthOpenParams)">Add new</button>
+      <button
+        class="btn btn-primary"
+        @click="setModalState(modalAuthOpenParams)"
+      >Новый счет</button>
     </div>
   </div>
 </template>
@@ -26,29 +26,34 @@ import { mapActions, mapGetters } from 'vuex';
 import { VueGoodTable } from 'vue-good-table';
 
 export default {
-  name: 'NewClientModal',
+  name: 'Invoices',
   components: { VueGoodTable },
   data: () => ({
     columns: [
       {
-        label: 'Company',
-        field: 'name',
+        label: '№',
+        field: 'number',
+        width: '90px',
       },
       {
-        label: 'Address',
-        field: 'address',
+        label: 'Date start',
+        field: 'dateStart',
       },
       {
-        label: 'Email',
-        field: 'email',
+        label: 'Client',
+        field: 'client.name',
       },
       {
-        label: 'Contract',
-        field: 'contract',
+        label: 'Price',
+        field: 'price',
+      },
+      {
+        label: 'Status',
+        field: 'status',
       },
     ],
     modalAuthOpenParams: {
-      modalComponentName: 'NewClientModal',
+      modalComponentName: 'NewInvoiceModal',
       modalState: true,
     },
   }),
@@ -62,7 +67,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      clients: 'clients/clients',
+      invoices: 'invoices/invoices',
     }),
   },
 };

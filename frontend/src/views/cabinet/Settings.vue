@@ -8,7 +8,7 @@
       />
     </div>
     <div class="app-content__body">
-      <transition name="fade" mode="out-in">
+      <transition name="slide-fade" mode="out-in">
         <template v-if="activeTab === 0">
           <SettingsTab1 />
         </template>

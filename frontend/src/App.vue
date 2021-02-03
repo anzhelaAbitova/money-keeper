@@ -23,6 +23,7 @@ import AuthModal from './components/modal/AuthModal.vue';
 import ConfirmModal from './components/modal/ConfirmModal.vue';
 import NewClientModal from './components/modal/NewClienModal.vue';
 import NewServicesModal from './components/modal/NewServicesModal.vue';
+import NewInvoiceModal from './components/modal/NewInvoiceModal.vue';
 import IconClose from './components/images-svg/icons/IconClose.vue';
 
 const Modal = namespace('modal');
@@ -33,6 +34,7 @@ const Modal = namespace('modal');
     ConfirmModal,
     NewClientModal,
     NewServicesModal,
+    NewInvoiceModal,
     IconClose,
   },
 })

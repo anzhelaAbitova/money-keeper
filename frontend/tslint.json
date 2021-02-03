@@ -5,6 +5,7 @@
             "options": [160]
         },
         "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
         // "new-parens": true,
         // "no-arg": true,
         // "no-bitwise": true,

@@ -4,7 +4,7 @@ import store from '../store';
 import Home from '../views/pages/Home.vue';
 import CabinetHome from '../views/cabinet/Home.vue';
 import Charts from '../views/cabinet/Charts.vue';
-import History from '../views/cabinet/History.vue';
+import Invoices from '../views/cabinet/Invoices.vue';
 import Services from '../views/cabinet/Services.vue';
 import Balance from '../views/cabinet/Balance.vue';
 import Clients from '../views/cabinet/Clients.vue';
@@ -51,9 +51,9 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
-    path: '/cabinet/history',
-    name: 'History',
-    component: History,
+    path: '/cabinet/invoices',
+    name: 'Invoices',
+    component: Invoices,
     meta: {
       layout: 'cabinet-layout',
       requiresAuth: true,

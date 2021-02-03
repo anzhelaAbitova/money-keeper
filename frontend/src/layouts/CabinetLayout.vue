@@ -53,6 +53,7 @@ const User = namespace('user');
 const Services = namespace('services');
 const Company = namespace('company');
 const Clients = namespace('clients');
+const Invoices = namespace('invoices');
 
 @Component({
   components: {
@@ -77,11 +78,17 @@ export default class CabinetLayout extends Vue {
 
   @Company.Action private clearCompanyData!: () => void;
 
+  @Company.Action private getCompanyData!: () => void;
+
   @Services.Action private clearServicesData!: () => void;
 
   @Services.Action private getServicesData!: () => void;
 
   @Clients.Action private clearClientsData!: () => void;
+
+  @Invoices.Action private getInvoicesData!: () => Promise<void | never>;
+
+  @Invoices.Action private clearInvoicesData!: () => Promise<void | never>;
 
   private userDropDownOpen = false;
 
@@ -100,8 +107,10 @@ export default class CabinetLayout extends Vue {
 
   created() {
     this.getUserData();
+    this.getCompanyData();
     this.getClientsData();
     this.getServicesData();
+    this.getInvoicesData();
   }
 
   confirmCb(ev: boolean): void {
@@ -116,6 +125,7 @@ export default class CabinetLayout extends Vue {
     this.clearCompanyData();
     this.clearServicesData();
     this.clearClientsData();
+    this.clearInvoicesData();
   }
 }
 </script>

@@ -44,6 +44,7 @@ import IconCamera from '../images-svg/icons/IconCamera.vue';
 import IconTrophy from '../images-svg/icons/IconTrophy.vue';
 import IconWallet from '../images-svg/icons/IconWallet.vue';
 import IconSettings from '../images-svg/icons/IconSettings.vue';
+import IconActions from '../images-svg/icons/IconActions.vue';
 import { IDrawerRoutes } from '../../store/modules/global/types';
 
 const Global = namespace('global');
@@ -58,6 +59,7 @@ const Global = namespace('global');
     IconTrophy,
     IconWallet,
     IconSettings,
+    IconActions,
   },
 })
 

@@ -1,9 +1,10 @@
 export interface IServicesState {
-  services?: IServiceData[];
+  services?: Array<IServiceData>;
 }
 
 export interface IServiceData {
   articul?: string;
   description?: string;
-  price?: string;
+  price?: number | string;
+  name?: string;
 }

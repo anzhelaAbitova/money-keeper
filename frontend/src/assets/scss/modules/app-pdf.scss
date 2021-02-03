@@ -1,0 +1,111 @@
+.invoice-preview {
+    width: 210mm;
+    margin: 0 auto;
+}
+
+.invoice-printable {
+    font-family: Arial;
+    margin: 0px auto;
+    padding: 50px;
+}
+
+.invoice-printable .company_details {
+    clear: both;
+    overflow: hidden;
+}
+
+.invoice-preview table {
+    width: 99%;
+    margin-top: 15px;
+}
+
+.invoice-printable td {
+    padding: 0 10px;
+    height: 30px;
+}
+
+.invoice-printable #payment {
+    margin-bottom: 20px;
+}
+
+.invoice-printable #payment h3 {
+    font-size: 10pt;
+}
+
+.invoice-printable #info {
+    margin-top: 20px;
+}
+
+.invoice-printable #info h1 {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.invoice-printable #order {
+    margin-top: 20px;
+}
+
+.invoice-printable #order #total_text {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #555555;
+}
+
+.invoice-printable #order table tbody.data tr {
+    border: 1px solid #555555;
+}
+
+.invoice-printable #sign #accountant_post,
+.invoice-printable #sign #director_post {
+    width: 200px;
+    white-space: nowrap;
+}
+
+.invoice-printable #sign tr.values td {
+    height: 50px;
+    vertical-align: bottom;
+}
+
+.invoice-printable #sign #director_signature {
+    width: 300px;
+    height: 50px;
+}
+
+.invoice-printable #sign tr.values td {
+    height: 50px;
+    vertical-align: bottom;
+}
+
+.invoice-printable #sign tr.values td {
+    height: 50px;
+    vertical-align: bottom;
+}
+
+.invoice-printable #sign #director_post_label,
+.invoice-printable #sign #director_signature_label,
+.invoice-printable #sign #director_label,
+.invoice-printable #sign #accountant_post_label,
+.invoice-printable #sign #accountant_label,
+.invoice-printable #sign #accountant_signature_label {
+    border-top: 1px solid #555555;
+    vertical-align: top;
+    font-size: 10px;
+}
+
+.invoice-printable #sign tr.labels td {
+    vertical-align: top;
+    padding-top: 5px;
+}
+
+.invoice-printable #sign #accountant_post,
+.invoice-printable #sign #director_post {
+    width: 200px;
+    white-space: nowrap;
+}
+
+.invoice-printable #sign tr.values td {
+    height: 50px;
+    vertical-align: bottom;
+}

@@ -7,6 +7,7 @@ import modal from './modules/modal/store';
 import company from './modules/company/store';
 import clients from './modules/clients/store';
 import services from './modules/services/store';
+import invoices from './modules/invoices/store';
 
 Vue.use(Vuex);
 
@@ -21,6 +22,7 @@ const store: StoreOptions<IRootState> = {
     company,
     clients,
     services,
+    invoices,
   },
   strict: true,
 };
