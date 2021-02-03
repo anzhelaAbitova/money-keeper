@@ -1,3 +1,4 @@
+<%- include("head.ejs") %>
 <h1>Login</h1>
 <% if (messages.error) { %>
     <%= messages.error %>
@@ -14,8 +15,6 @@
     <button type="submit">Login</button>
 </form>
 <a href="/register">Register</a>
-<script>
-    fetch('/login', {credentials: 'include'})
-    .then(res => res.json())
-    .then(json => console.log(json))
-</script>
+<%- include("scripts.ejs") %>
+</body>
+</html>

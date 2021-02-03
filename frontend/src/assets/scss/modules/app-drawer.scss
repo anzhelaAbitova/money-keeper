@@ -56,6 +56,8 @@
     }
 
     &__nav {
+        position: relative;
+        height: calc(100% - 95px);
         padding: 20px 0 0;
     }
 
@@ -73,6 +75,7 @@
     }
 
     &__rout-icon {
+        position: relative;
         width: 55px;
         padding: 8px 0 0;
         text-align: center;

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import firebase from 'firebase/app';
 import { ActionTree } from 'vuex';
 import { IUserState } from '../types';
@@ -90,6 +91,16 @@ const actions: ActionTree<IUserState, IRootState> = {
   getUid() {
     const user = firebase.auth().currentUser;
     return user ? user.uid : null;
+=======
+import { ActionTree } from 'vuex';
+import { IUser } from '../types';
+import { IRootState } from '../../../types';
+import { SET_USER_AVATAR } from './mutations-types';
+
+const actions: ActionTree<IUser, IRootState> = {
+  setUserAvatar({ commit }, payload: string) {
+    commit(SET_USER_AVATAR, payload);
+>>>>>>> develop
   },
 };
 
