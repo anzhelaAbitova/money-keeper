@@ -3,6 +3,7 @@
 const login = document.querySelector('.app-page__auth');
 
 login.addEventListener('click', function() {
+    console.log(this)
     const modal = document.querySelector('.auth-modal');
     const btnLogin = getDescendant('button', 'btn-primary');
     console.log(btnLogin)
