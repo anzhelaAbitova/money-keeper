@@ -134,7 +134,7 @@ app.get('/users', (req, res) => {
 })
 
 app.get('/post', checkAuthenticated, async (req, res) => {
-  res.render('post.ejs', { username: req.session.passport.user, text: 'posts'  });
+  res.render('post.ejs', { username: 'Jane Doe', text: 'posts'  });
 })
 
 app.post('/post', checkAuthenticated, async (req, res) => {
@@ -222,13 +222,13 @@ app.get('/balance', checkAuthenticated, async (req, res) => {
             datasets: [{ 
               data: income,
               label: "Income",
-              borderColor: "#F0009C",
+              backgroundColor: "#F0009C",
               fill: true
             },
             {
               data: expense,
               label: "Expense",
-              borderColor: "#0BDBE7",
+              backgroundColor: "#0BDBE7",
               fill: true
             }]
         },
