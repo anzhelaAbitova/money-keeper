@@ -43,6 +43,9 @@ const interactionScheme = new Schema({
       type: Number,
       required: true,
     },
+    inType: {
+      type: String,
+    },
     income: {
       type: Boolean,
     },

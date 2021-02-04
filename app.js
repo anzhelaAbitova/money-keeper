@@ -144,6 +144,7 @@ app.post('/post', checkAuthenticated, async (req, res) => {
       work: req.body.work,
       contractor: req.body.contractor,
       cost: req.body.cost,
+      inType: req.body.incomeType,
       income: (req.body.income === 'on') ? true : false,
       regular: (req.body.regular === 'on') ? true : false,
     });
@@ -203,9 +204,9 @@ app.get('/balance', checkAuthenticated, async (req, res) => {
     const expense = [];
     data.forEach(elem => {
       if (elem.income) {
-        income.push(elem);
+        income.push(elem.cost);
       } else {
-        expense.push(elem);
+        expense.push(elem.cost);
       }
     }) 
     const width = 500;
@@ -223,13 +224,15 @@ app.get('/balance', checkAuthenticated, async (req, res) => {
               data: income,
               label: "Income",
               backgroundColor: "#F0009C",
-              fill: true
+              borderColor: "#F0009C",
+              fill: false
             },
             {
               data: expense,
               label: "Expense",
               backgroundColor: "#0BDBE7",
-              fill: true
+              borderColor: "#0BDBE7",
+              fill: false
             }]
         },
         options: {
@@ -264,13 +267,26 @@ app.get('/balance', checkAuthenticated, async (req, res) => {
 
 app.get('/chart', checkAuthenticated, async (req, res) => {
   try {
-    console.log(req.session.passport.user)
     const data = await Interaction.find({ "user": req.session.passport.user }).populate().exec(); 
     const quiz = [];
     const blogs = [];
     const ecommerce = [];
     const corporate = [];
     const promo = [];
+    data.forEach(elem => {
+      if (elem.income && elem.inType === 'quiz') {
+        quiz.push(elem.cost);
+      } else if (elem.income && elem.inType === 'blogs') {
+        blogs.push(elem.cost);
+      } else if (elem.income && elem.inType === 'ecommerce') {
+        ecommerce.push(elem.cost);
+      } else if (elem.income && elem.inType === 'corporate') {
+        corporate.push(elem.cost);
+      } else if (elem.income && elem.inType === 'promo') {
+        promo.push(elem.cost);
+      }
+    }) 
+    console.log(corporate)
     const width = 500;
     const height = 500;
     const chartCallback = (ChartJS) => {
@@ -282,45 +298,31 @@ app.get('/chart', checkAuthenticated, async (req, res) => {
         type: 'bar',
         data: {
             labels: ['Quiz', 'E-commerce', 'Blogs', 'Corporate', 'Promo'],
-            datasets: [
-              { 
-              data: quiz,
-              label: "Quiz",
-              backgroundColor: "#FF7785",
-              fill: true
-            },
-            {
-              data: ecommerce,
-              label: "E-commerce",
-              backgroundColor: "#FFA841",
-              fill: true
-            },
-            { 
-              data: blogs,
-              label: "Blogs",
-              backgroundColor: "#1EE491",
-              fill: true
-            },
-            { 
-              data: corporate,
-              label: "Corporate",
-              backgroundColor: "#F5CECF",
-              fill: true
-            },
-            {
-              data: promo,
-              label: "Promo",
-              backgroundColor: "#0BDBE7",
-              fill: true
-            }
-          ]
+            datasets: [{
+              label: 'Types of incomes',
+              data: [quiz.length, ecommerce.length, blogs.length, corporate.length, promo.length ],
+              backgroundColor: [
+                  'rgba(255, 119, 133, 0.5)',
+                  'rgba(255, 168, 65, 0.5)',
+                  'rgba(30, 228, 145, 0.5)',
+                  'rgba(245, 206, 207, 0.5)',
+                  'rgba(11, 219, 231, 0.5)'
+              ],
+              borderColor: [
+                  'rgba(255, 119, 133, 1)',
+                  'rgba(255, 168, 65, 1)',
+                  'rgba(30, 228, 145, 1)',
+                  'rgba(245, 206, 207, 1)',
+                  'rgba(11, 219, 231, 1)'
+              ],
+              borderWidth: 1
+          }]
         },
         options: {
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero: true,
-                        callback: (value) => '$' + value
+                        beginAtZero: true
                     }
                 }]
             },
@@ -373,7 +375,7 @@ function checkAuthenticated(req, res, next) {
     return next()
   }
   console.log(req.isAuthenticated())
-  //res.redirect('/')
+  res.redirect('/')
 }
 
 function checkNotAuthenticated(req, res, next) {
