@@ -70,7 +70,6 @@ import { IAppInput } from '../../types';
 import AppInput from '../elements/AppInput.vue';
 
 const Modal = namespace('modal');
-const User = namespace('user');
 
 type AuthModalParams = {
   active: number;
@@ -92,10 +91,6 @@ export default class AuthModal extends Vue {
 
   @Modal.Action private setModalState!: (ev: boolean) => void;
 
-  // @User.Action private login!: ({ email, password }: ILoginUser) => Promise<string>;
-
-  // @User.Action private register!: ({ email, password }: ILoginUser) => Promise<string>;
-
   private activeTab = 0;
 
   private errorMessageLogin = '';
@@ -109,7 +104,7 @@ export default class AuthModal extends Vue {
     value: '',
     placeholder: '***********',
     hasBlurCheck: true,
-    minLength: 6,
+    minLength: 3,
   };
 
   private inputsLoginData: IAppInput[] = [
@@ -120,7 +115,7 @@ export default class AuthModal extends Vue {
       value: '',
       placeholder: 'Your name',
       hasBlurCheck: true,
-      minLength: 5,
+      minLength: 3,
     },
     {
       label: 'Email:',
@@ -129,7 +124,7 @@ export default class AuthModal extends Vue {
       value: '',
       placeholder: 'yours@email.com',
       hasBlurCheck: true,
-      minLength: 5,
+      minLength: 3,
     },
     {
       label: 'Password:',
@@ -138,7 +133,7 @@ export default class AuthModal extends Vue {
       value: '',
       placeholder: '***********',
       hasBlurCheck: true,
-      minLength: 6,
+      minLength: 3,
     },
   ];
 
@@ -168,6 +163,7 @@ export default class AuthModal extends Vue {
         },
         body: JSON.stringify(user),
       });
+      document.location.href = 'https://money-keeper21.herokuapp.com/post';
       return response.json();
     } catch (err) {
       return console.log(err);
@@ -176,6 +172,7 @@ export default class AuthModal extends Vue {
 
   private async signIn(data: ILoginUser) {
     try {
+      console.log(this);
       const user = data;
       const response = await fetch('https://money-keeper21.herokuapp.com/login', {
         method: 'POST',
@@ -184,15 +181,11 @@ export default class AuthModal extends Vue {
         },
         body: JSON.stringify(user),
       });
-      return response.json()
+      document.location.href = 'https://money-keeper21.herokuapp.com/post';
+      return response.json();
     } catch (err) {
       return console.log(err);
     }
-  }
-
-  private goToCabinet(path: string) {
-    this.setModalState(false);
-    this.$router.push(path);
   }
 }
 </script>
