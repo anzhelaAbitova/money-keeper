@@ -357,7 +357,7 @@ app.get('/settings', checkAuthenticated, async (req, res) => {
 
 app.get('/logout', (req, res) => {
   req.logOut();
-  //res.redirect('/login');
+  res.redirect('/');
 })
 
 function findUser(id, req, res) {
