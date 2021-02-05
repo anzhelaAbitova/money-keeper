@@ -160,17 +160,17 @@ app.post('/post', checkAuthenticated, async (req, res) => {
     return res.sendStatus(500);  
   }
 })
-/*
-app.get('./contractor', checkAuthenticated, (req, res) => {
-  //res.render('contractor.ejs');
+
+app.get('/contractor', checkAuthenticated, (req, res) => {
+  res.render('contractor.ejs', { username: 'Jane Doe', text: 'contractors' });
 })
-*/
+
 
 app.post('/contractor', checkAuthenticated, async (req, res) => {
   try {
     const contractor = new Contractor ({
       name: req.body.name,
-      works: req.body.work || 'test',
+      client: (req.body.client === 'on') ? true : false,
       regular: (req.body.regular === 'on') ? true : false,
     })
     await contractor.save(function(err){

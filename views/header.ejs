@@ -10,17 +10,15 @@
         </div>
       </div>
       <div class="app-cabinet__header-user">
-        <a href="javascript:void(0);" @click="userDropDownOpen = !userDropDownOpen">
+        <a href="javascript:void(0);">
           <span class="iconify" data-inline="false" data-icon="mdi-light:account" style="color: #0f0f0f; font-size: 81px;"></span>
         </a>
-        <transition name="fade">
-          <div class="app-cabinet__user-dropdown" :class="{ 'is-open' : userDropDownOpen }">
-            Press this to logout
+          <div class="app-cabinet__user-dropdown">
+            <div class="app-cabinet__user-dropdown_row">Press this to logout</div>
             <div class="app-cabinet__user-dropdown_row">
               <a href="/logout" class="btn btn-primary">Log out</a>
             </div>
           </div>
-        </transition>
       </div>
     </div>
 <div>
@@ -45,18 +43,17 @@
         </a>
         <a class="app-drawer__rout" href="/history">
           <div class="app-drawer__rout-icon">
-            <span class="iconify" data-inline="false" data-icon="mdi-light:alarm" style="color: #e6f3f5; font-size: 24px;"></span>
+            <span class="iconify" data-inline="false" data-icon="mdi-light:alarm" style="color: #e6f3f5; font-size: 26px;"></span>
           </div>
           <div class="app-drawer__rout-name">
             History
           </div>
         </a>
-        <a class="app-drawer__rout" href="/goals">
+        <a class="app-drawer__rout" href="/contractor">
           <div class="app-drawer__rout-icon">
-            <span class="iconify" data-inline="false" data-icon="mdi-light:trophy" style="color: #e6f3f5; font-size: 24px;"></span>
-          </div>
+            <span class="iconify" data-inline="false" data-icon="fluent:contact-card-20-regular" style="color: #E6F3F5; font-size: 24px;"></span>          </div>
           <div class="app-drawer__rout-name">
-            Goals
+            Contractors
           </div>
         </a>
         <a class="app-drawer__rout" href="/balance">

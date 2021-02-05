@@ -120,7 +120,8 @@ body {
     background: linear-gradient(45deg, #3fff7c, #3ffbe0);
     box-shadow: 3px 3px 5px rgba(29, 22, 22, .15);
     color: #2d9cdb;
-    transition: color .3s ease-in-out
+    transition: color .3s ease-in-out;
+    font-family: 'Noto Sans';
 }
 
 .btn-primary:hover {
@@ -160,7 +161,8 @@ body {
     font-size: 16px;
     line-height: 19px;
     letter-spacing: .03em;
-    color: #0f0f0f
+    color: #0f0f0f;
+    font-family: 'Noto sans', sans-serif;
 }
 
 .app-input__error {
@@ -243,6 +245,10 @@ body {
     font-family: Noto Sans;
     font-weight: 400;
     color: #f9f9f9
+}
+
+.dark h1 {
+    color: #0f0f0f;
 }
 
 .app-page__banner-text {
@@ -449,6 +455,10 @@ body {
     margin: auto 0
 }
 
+form div {
+    margin-bottom: 1rem;
+}
+
 .app-cabinet {
     width: 100vw;
     height: 100vh;
@@ -527,6 +537,17 @@ body {
     transform-origin: 100% 100%;
     border-top: 2px solid #3f3b97;
     border-right: 2px solid #3f3b97
+}
+
+.app-cabinet__user-dropdown_row {
+    display: block;
+    padding: 0 0 10px 18px;
+    font-family: Noto Sans;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: .03em;
+    color: #0f0f0f;
+    margin-bottom: 1.5rem;
 }
 
 .app-cabinet__main {

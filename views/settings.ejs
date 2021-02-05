@@ -2,28 +2,21 @@
 <body>
     <%- include("header.ejs") %>
     <div class="app-content">
-        <div class="app-content__head">
-          <HeadTabs
-            :tabs="tabs"
-            :activeTab="activeTab"
-            @changeActive="activeTab = $event"
-          />
-        </div>
         <div class="app-content__body">
-          <transition name="fade" mode="out-in">
-            <div v-if="activeTab === 0" class="app-content__page">
+            <div class="app-content__page">
               <div class="app-content__col">
+                <div class="app-page__banner-title dark"><h1>Your settings</h1></div>
                 <div class="app-content__form">
                     <form action="" method="POST" id="form-settings" class="form__settings">
-                      <div class="app-content__form-row">
+                      <div class="app-modal__form-row">
                           <label for="username" class="app-input__label">Username</label>
                           <input type="text" name="username" id="username"  class="app-input">
                       </div>
-                      <div class="app-content__form-row">
+                      <div class="app-modal__form-row">
                           <label for="contractor" class="app-input__label">Contractor</label>
                           <input type="text" name="contractor" id="contractor" class="app-input">
                       </div>
-                      <div class="app-content__form-row">
+                      <div class="app-modal__form-row">
                           <p class="app-input__label">Type of incomes</p>
                           <input type="text" name="income-type" id="income-type1" class="app-input" value="Quiz">
                           <input type="text" name="income-type" id="income-type2" class="app-input" value="E-commerce">
@@ -32,7 +25,7 @@
                           <input type="text" name="income-type" id="income-type5" class="app-input" value="Promo">
                           <input type="text" name="income-type" id="income-type6" class="app-input" value="">
                       </div>
-                      <div class="app-content__form-row">
+                      <div class="app-modal__form-row">
                           <button type="submit" id="settingsBTN" class="btn btn-primary">Save settings</button>
                       </div>
                   </form>

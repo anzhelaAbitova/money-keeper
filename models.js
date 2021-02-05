@@ -59,14 +59,13 @@ const contractorScheme = new Schema ({
   name: {
     type: String,
     required: true,
+    unique: true,
     index: { 
       unique: true 
     }
   },
-  works: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Interaction',
-    required: true,
+  client: {
+    type: Boolean,
   },
   regular: {
     type: Boolean,

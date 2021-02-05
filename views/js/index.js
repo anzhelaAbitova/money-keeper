@@ -1,15 +1,17 @@
 'use strict';
 
-const makeElem = (type, className = '', text = '') => {
-    let el = document.createElement(type);
-    if (className) {
-        if (typeof className === 'string') {
-            el.classList.add(className);
-        } else {
-            className.forEach(item => el.classList.add(item));
-        }
-    };
-    let textNode = document.createTextNode(text);
-    el.appendChild(textNode);
-    return el;
-}
+const appDrawer = document.querySelector('.app-drawer');
+const makePost = document.querySelector('#makePost');
+const userHeader = document.querySelector('.app-cabinet__header-user');
+const userDropdown = document.querySelector('.app-cabinet__user-dropdown');
+
+appDrawer.addEventListener('mouseenter', function () {
+    appDrawer.classList.toggle('is-open');
+    appDrawer.addEventListener('mouseleave', function () {
+        appDrawer.classList.toggle('is-open');
+    })
+})
+
+userHeader.addEventListener('click', function() {
+    userDropdown.classList.toggle('is-open');
+})
