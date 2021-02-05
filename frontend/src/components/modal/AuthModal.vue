@@ -163,8 +163,14 @@ export default class AuthModal extends Vue {
         },
         body: JSON.stringify(user),
       });
-      document.location.href = 'https://money-keeper21.herokuapp.com/post';
-      return response.json();
+      if (response.ok) {
+        const json = await response.json();
+        console.log(json)
+      } else {
+        console.log(`Ошибка HTTP: ${response.status}`);
+      }
+      //document.location.href = 'https://money-keeper21.herokuapp.com/post';
+      return console.log(response.json());
     } catch (err) {
       return console.log(err);
     }
@@ -172,7 +178,7 @@ export default class AuthModal extends Vue {
 
   private async signIn(data: ILoginUser) {
     try {
-      console.log(this);
+      let box = this;
       const user = data;
       const response = await fetch('https://money-keeper21.herokuapp.com/login', {
         method: 'POST',
@@ -181,7 +187,14 @@ export default class AuthModal extends Vue {
         },
         body: JSON.stringify(user),
       });
-      document.location.href = 'https://money-keeper21.herokuapp.com/post';
+      if (response.ok) {
+        console.log(response);
+        const json = await response.json();
+        console.log(json);
+        document.location.href = 'https://money-keeper21.herokuapp.com/post';
+      } else {
+        console.log(`Ошибка HTTP: ${response.status}`);
+      }
       return response.json();
     } catch (err) {
       return console.log(err);
