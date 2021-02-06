@@ -181,7 +181,7 @@ export default class AuthModal extends Vue {
         console.log(response);
         const json = await response.json();
         console.log(json);
-        // document.location.href = 'https://money-keeper21.herokuapp.com/post';
+        setTimeout(() => {document.location.href = '/post'}, 1200);
       } else {
         console.log(`Ошибка HTTP: ${response.status}`);
       }
