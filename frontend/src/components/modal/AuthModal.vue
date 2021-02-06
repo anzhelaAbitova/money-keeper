@@ -34,14 +34,14 @@
           </div>
         </div>
         <div v-else class="auth-modal__form">
+          <div class="auth-modal__form-row">
+            <AppInput :params="inputConfirmData" @changeInput="inputConfirmData.value = $event" />
+          </div>
           <template v-for="(item, i) in inputsLoginData">
             <div class="auth-modal__form-row" :key="'reginpts' + i" >
               <AppInput :params="item" @changeInput="item.value = $event" />
             </div>
           </template>
-          <div class="auth-modal__form-row">
-            <AppInput :params="inputConfirmData" @changeInput="inputConfirmData.value = $event" />
-          </div>
           <div class="auth-modal__error">
             <small v-if="errorMessageReg">{{ errorMessageReg }}</small>
           </div>
@@ -97,18 +97,7 @@ export default class AuthModal extends Vue {
 
   private errorMessageReg = '';
 
-  private inputConfirmData: IAppInput = {
-    label: 'Confirm password:',
-    type: 'password',
-    name: 'confirmPassword',
-    value: '',
-    placeholder: '***********',
-    hasBlurCheck: true,
-    minLength: 3,
-  };
-
-  private inputsLoginData: IAppInput[] = [
-    {
+  private inputConfirmData: IAppInput =   {
       label: 'Name:',
       type: 'text',
       name: 'username',
@@ -116,7 +105,9 @@ export default class AuthModal extends Vue {
       placeholder: 'Your name',
       hasBlurCheck: true,
       minLength: 3,
-    },
+    };
+
+  private inputsLoginData: IAppInput[] = [
     {
       label: 'Email:',
       type: 'email',
@@ -138,11 +129,10 @@ export default class AuthModal extends Vue {
   ];
 
   get getRegBtnDisable() {
-    const name = this.inputsLoginData[0].value && this.inputsLoginData[0].value.length > 5;
-    const email = this.inputsLoginData[1].value && this.inputsLoginData[1].value.length > 5;
-    const pass = this.inputsLoginData[2].value && this.inputsLoginData[2].value.length > 5;
-    const cPass = this.inputConfirmData.value === this.inputsLoginData[2].value;
-    return name && email && pass && cPass;
+    const email = this.inputsLoginData[0].value && this.inputsLoginData[0].value.length > 3;
+    const pass = this.inputsLoginData[1].value && this.inputsLoginData[1].value.length > 3;
+    const name = this.inputConfirmData.value && this.inputConfirmData.value.length > 3;
+    return name && email && pass;
   }
 
   mounted() {
@@ -152,9 +142,9 @@ export default class AuthModal extends Vue {
   private async regUser() {
     try {
       const user = {
-        username: this.inputsLoginData[0].value,
-        email: this.inputsLoginData[1].value,
-        password: this.inputsLoginData[2].value,
+        username: this.inputConfirmData.value,
+        email: this.inputsLoginData[0].value,
+        password: this.inputsLoginData[1].value,
       };
       const response = await fetch('https://money-keeper21.herokuapp.com/register', {
         method: 'POST',
