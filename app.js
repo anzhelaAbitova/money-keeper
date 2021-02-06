@@ -36,7 +36,7 @@ initializePassport(
 
 app.set('view-engine', 'ejs')
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(flash())
 app.use(cors())
 app.use(session({
@@ -75,15 +75,15 @@ app.get('/*', (req, res) => {
 })
 */
 app.get('/', (req, res) => {
-  res.render('index.ejs')
+  res.render('index.ejs', { isNotIndex: false })
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
-   res.render('login.ejs')
+   res.render('login.ejs', { isNotIndex: false })
 })
 
 app.get('/register', checkNotAuthenticated, async (req, res) => {
-  res.render('register.ejs', { usersEjs: null })
+  res.render('register.ejs', { usersEjs: null, isNotIndex: false })
 })
 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
@@ -134,7 +134,7 @@ app.get('/users', (req, res) => {
 })
 
 app.get('/post', checkAuthenticated, async (req, res) => {
-  res.render('post.ejs', { username: 'Jane Doe', text: 'posts'  });
+  res.render('post.ejs', { username: 'Jane Doe', text: 'posts', isNotIndex: true  });
 })
 
 app.post('/post', checkAuthenticated, async (req, res) => {
@@ -162,7 +162,7 @@ app.post('/post', checkAuthenticated, async (req, res) => {
 })
 
 app.get('/contractor', checkAuthenticated, (req, res) => {
-  res.render('contractor.ejs', { username: 'Jane Doe', text: 'contractors' });
+  res.render('contractor.ejs', { username: 'Jane Doe', text: 'contractors', isNotIndex: true });
 })
 
 
@@ -189,7 +189,7 @@ app.get('/history', checkAuthenticated, async (req, res) => {
     console.log(req.session.passport.user)
     const data = await Interaction.find({ "user": req.session.passport.user }).populate().exec();
     console.log(data)
-    return res.render('history.ejs', { username: 'Jane Doe', interaction: data, text: 'history'  });
+    return res.render('history.ejs', { username: 'Jane Doe', interaction: data, text: 'history', isNotIndex: true  });
   } catch (err) {
     console.log(err);
     return res.sendStatus(500);
@@ -257,7 +257,7 @@ app.get('/balance', checkAuthenticated, async (req, res) => {
     const image = await chartJSNodeCanvas.renderToBuffer(configuration);
     const dataUrl = await chartJSNodeCanvas.renderToDataURL(configuration);
     const stream = chartJSNodeCanvas.renderToStream(configuration);
-    return res.render('balance.ejs', { username: 'Jane Doe', interaction: data, imageC: dataUrl, text: 'balance'  });
+    return res.render('balance.ejs', { username: 'Jane Doe', interaction: data, imageC: dataUrl, text: 'balance', isNotIndex: true  });
 })();
   } catch (err) {
     console.log(err);
@@ -339,7 +339,7 @@ app.get('/chart', checkAuthenticated, async (req, res) => {
     const image = await chartJSNodeCanvas.renderToBuffer(configuration);
     const dataUrl = await chartJSNodeCanvas.renderToDataURL(configuration);
     const stream = chartJSNodeCanvas.renderToStream(configuration);
-    return res.render('chart.ejs', { username: 'Jane Doe', imageC: dataUrl, text: 'chart'  });
+    return res.render('chart.ejs', { username: 'Jane Doe', imageC: dataUrl, text: 'chart', isNotIndex: true  });
 })();
   } catch (err) {
     console.log(err);
@@ -348,11 +348,11 @@ app.get('/chart', checkAuthenticated, async (req, res) => {
 })
 
 app.get('/goals', checkAuthenticated, async (req, res) => {
-  res.render('goals.ejs', { username: 'Jane Doe', text: 'goals'  });
+  res.render('goals.ejs', { username: 'Jane Doe', text: 'goals', isNotIndex: true  });
 })
 
 app.get('/settings', checkAuthenticated, async (req, res) => {
-  res.render('settings.ejs', { username: 'Jane Doe', text: 'settings'  });
+  res.render('settings.ejs', { username: 'Jane Doe', text: 'settings', isNotIndex: true  });
 })
 
 app.get('/logout', (req, res) => {
