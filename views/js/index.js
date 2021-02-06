@@ -1,5 +1,5 @@
 'use strict';
-
+/*
 const appDrawer = document.querySelector('.app-drawer');
 const makePost = document.querySelector('#makePost');
 const userHeader = document.querySelector('.app-cabinet__header-user');
@@ -14,4 +14,4 @@ appDrawer.addEventListener('mouseenter', function () {
 
 userHeader.addEventListener('click', function() {
     userDropdown.classList.toggle('is-open');
-})
+})*/
